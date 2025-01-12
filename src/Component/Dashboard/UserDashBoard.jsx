@@ -7,7 +7,7 @@ function UserDashBoard() {
   return (
     <div>
       <h1>Welcome, {user?.firstName || "User"}  {user?.lastName || "User"}!</h1>
-      <p>This is the user dashboard.</p>
+      <p>This is the user dashboard.h</p>
     </div>
   );
   }
