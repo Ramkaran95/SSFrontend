@@ -1,0 +1,117 @@
+/* Add some custom styles for the features section */
+#features {
+    background-color: #f8f9fa;
+  }
+  
+  .card-img-top {
+    height: 200px;
+    object-fit: cover; /* Ensures images cover the card area without distortion */
+  }
+  
+  .card-body {
+    background-color: #fff;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+  
+  .card-text {
+    font-size: 1rem;
+    color: #6c757d;
+  }
+
+  .features
+{
+  background-image: url('C:\FinalYearProject\SSFrontend\src\assets\feature.png'); /* Replace with your banner image */
+    background-size: cover;
+    background-position: center;
+    height: 890vh; /* Full viewport height */
+    transition: all 0.3s ease-in-out;
+    .cardCol {
+        opacity: 0;
+
+      }
+    
+}
+.features:hover{
+
+    
+    transform: scale(1.1); /* Zoom effect on hover */
+    .cardCol{
+        background-color: #f6f6ff34;
+           
+        color: #376fb8;
+        p {color: #070707};
+        opacity: 1;
+
+
+      }
+  }
+  .features2
+  {
+    background-image: url('C:\FinalYearProject\SSFrontend\src\assets\feature1.jpg'); /* Replace with your banner image */
+      background-size: cover;
+      background-position: center;
+      height: 890vh; /* Full viewport height */
+      transition: all 0.3s ease-in-out;
+      .cardCol {
+        opacity: 0;
+
+      }
+      
+  }
+  .features2:hover{
+    
+      transform: scale(1.1); /* Zoom effect on hover */
+      .cardCol{
+        background-color: #f6f6ff34;
+           
+        color: #376fb8;
+        p {color: #070707};
+        opacity: 1;
+
+
+      }
+    }
+    .features3
+    {
+      background-image: url('C:\FinalYearProject\SSFrontend\src\assets\feature3.png'); /* Replace with your banner image */
+        background-size: cover;
+        background-position: center;
+        height: 890vh; /* Full viewport height */
+        transition: all 0.3s ease-in-out;
+        .cardCol {
+            opacity: 0;
+    
+          }
+        
+    }
+    .features3:hover{
+       
+       
+        transform: scale(1.1); /* Zoom effect on hover */
+        .cardCol{
+            background-color: #f6f6ff34;
+           
+            color: #376fb8;
+            p {color: #070707};
+            opacity: 1;
+    
+    
+          }
+      }
+
+          
+      
+  @media (max-width: 768px) {
+    .card-title {
+      font-size: 1.1rem;
+    }
+  
+    .card-text {
+      font-size: 0.95rem;
+    }
+  }
+  

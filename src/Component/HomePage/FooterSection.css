@@ -1,0 +1,19 @@
+/* Add smooth hover underline effect for text links */
+.hover-underline:hover {
+    text-decoration: underline;
+    text-decoration-color: #ffd700; /* Gold color for underline */
+    transition: text-decoration 0.3s ease; /* Smooth transition for underline */
+  }
+  
+  /* Add hover effect for social media icons */
+  .hover-icon:hover {
+    transform: scale(1.2); /* Slightly enlarge the icon */
+    transition: transform 0.3s ease; /* Smooth scaling transition */
+  }
+  
+  /* Optional: Add color change effect for social media icons on hover */
+  .hover-icon:hover i {
+    color: #ffd700; /* Change icon color on hover to gold */
+    transition: color 0.3s ease;
+  }
+  
