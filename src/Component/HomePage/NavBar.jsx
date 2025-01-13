@@ -3,13 +3,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink, Link } from "react-router-dom";
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
-    <div className="container">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-primary justify-content-end">
+    <div className="container-fluid ">
       {/* Site Name */}
+     
       <a className="navbar-brand fw-bold fs-1" href="/">
-        Service Seeker
+      <img
+      src="/LG2.png"
+      alt="Site Logo"
+      style={{ height: "50px", marginBottom: "10px" }}
+    /> &nbsp;  ServiceSeeker
       </a>
-  
+     
       {/* Toggle Button for Mobile */}
       <button
         className="navbar-toggler"

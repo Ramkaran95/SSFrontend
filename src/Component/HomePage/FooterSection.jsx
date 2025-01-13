@@ -8,7 +8,13 @@ const FooterSection = () => {
       <div className="container">
         <div className="row">
           <div className="col-md-6">
-            <h5 className="mb-3">ServiceSeeker</h5>
+         
+   
+ <h5 className="mb-3"> <img
+      src="/LG2.png"
+      alt="Site Logo"
+      style={{ height: "30px", marginBottom: "10px" }}
+    /> &nbsp;ServiceSeeker</h5>
             <p>Your go-to platform for finding reliable service providers near you. We connect customers with skilled service providers in various fields.</p>
           </div>
           <div className="col-md-6 text-md-end">
