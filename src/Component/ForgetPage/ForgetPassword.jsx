@@ -4,11 +4,14 @@ import axios from "axios";
 import { ToastContainer ,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Spinner from "../../Spinner";
 const ForgotPassword = () => {
     const navigate = useNavigate();
     const [accountType, setAccountType] = useState("user"); // Default account type
     const [handleButtonState ,sethandleButtonState]=useState(false);
     const [handleButtonState1 ,sethandleButtonState1]=useState(false);
+    const [handleSpinnerState ,setSpinnerState]=useState(false);
+    
 
   const [step, setStep] = useState(1); // Tracks the current step
   const [email, setEmail] = useState("");
@@ -32,48 +35,40 @@ const ForgotPassword = () => {
   const handleOtpChange = (e) => setOtp(e.target.value);
   const handlePasswordChange = (e) =>
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
-
+  
   const sendOtp = async (e) => {
     e.preventDefault();
-    
+    sethandleButtonState(true);
+    setSpinnerState(true);
     try {
       const response = await axios.post(url, email, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      sethandleButtonState(true);
+     
       //alert("Otp send to your registered gmail: "+response.data.message); 
       // Notify OTP sent
+      setSpinnerState(false);
       toast.success(
         `${response?.data.message || "Otp send .!"
         }  `,
         {
-          position: "top-right",
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          onClose:()=>setStep(2)
           
-        
         }
       );
+      setStep(2);
 
       //setStep(2); // Proceed to OTP verification step
     } catch (error) {
+      sethandleButtonState(false);
+      setSpinnerState(false);
       toast.error(
         `${ "Verify Email, "+
           error.response?.data?.message || "Verify Email, User not found..!"
         }`,
         {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          
         }
       );
        
@@ -86,19 +81,15 @@ const ForgotPassword = () => {
      toast.info(
        "Password not match.!",
         {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          theme:"dark",
+         
         }
       );
       return;
     }
-
+   
+    sethandleButtonState1(true);
     try {
+      setSpinnerState(true);
       const resetDto = {
         Email: email,
         Otp: otp,
@@ -111,39 +102,32 @@ const ForgotPassword = () => {
         },
       });
 
-     sethandleButtonState1(true);
+     
       //alert("Otp send to your registered gmail: "+response.data.message); 
       // Notify OTP sent
+      
+     
       toast.success(
         `${response?.data.message || "Password Reset Successfully..!"
         }  `,
         {
-          position: "top-right",
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
           
-          onClose:()=>navigate("/login")
-       
           
         
         }
       );
+      navigate("/login");
+       
       // Reset to the first step
     } catch (error) {
+      sethandleButtonState1(false);
+      setSpinnerState(false);
       toast.error(
         `${ 
           error.response?.data?.message || "Invalid Otp..!"
         }`,
         {
-          position: "top-right",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+         
         }
       );
      
@@ -153,7 +137,7 @@ const ForgotPassword = () => {
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-     <ToastContainer
+     {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -163,8 +147,8 @@ const ForgotPassword = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
-      
+      /> */}
+      <Spinner visible={handleSpinnerState}/>
       <div className="card shadow p-4" style={{ width: "400px", borderRadius: "10px" }}>
         <h3 className="text-center mb-4">Forgot Password</h3>
 
@@ -198,7 +182,7 @@ const ForgotPassword = () => {
               />
             </div>
             <button type="submit" disabled={handleButtonState}  className="btn btn-primary w-100" style={{ borderRadius: "10px" }}>
-          {handleButtonState? "Redirecting..." : "Send OTP"}
+          {handleButtonState? "Sending..." : "Send OTP"}
           </button>
             </form>
           </>

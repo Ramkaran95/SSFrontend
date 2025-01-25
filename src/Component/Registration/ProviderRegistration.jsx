@@ -3,7 +3,40 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer ,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import NavBar from "../HomePage/NavBar";
 function ProviderRegistration() {
+  const [value,setValue]=useState('')
+  const options = [
+      {label:"Delhi",value:1},
+      {label:"Mumbai",value:2},
+      {label:"Bengaluru",value:3},
+      {label:"Chennai",value:4},
+      {label:"Kolkata",value:5},
+      {label:"Hyderabad",value:6},
+      {label:"Pune",value:7},
+      {label:"Ahmedabad",value:8},
+      {label:"Chandigarh",value:9},
+      {label:"Jaipur",value:10},
+      {label:"Kochi",value:11},
+      {label:"Lucknow",value:12},
+      {label:"Surat",value:13},
+      {label:"Indore",value:14},
+      {label:"Ghaziabad",value:15},
+      {label:"Noida",value:16},
+      {label:"Nagpur",value:17},
+      {label:"Bhopal",value:18},
+      {label:"Vishakapatnam",value:19},
+      {label:"Vadodara",value:20},
+      {label:"Mysore",value:21},
+      {label:"Patna",value:22},
+      {label:"Coimbatore",value:23},
+      {label:"Rajkot",value:24},
+      {label:"Kanpur",value:25}
+  ]
+  function handleSelect(event){
+      setValue(event.target.value)
+  }
+
     const navigate= useNavigate();
    
      const handleNextStep = (e) => {
@@ -179,13 +212,14 @@ function ProviderRegistration() {
     console.log("City:", formData.city);
     console.log("Longitude:", typeof formData.longitude,formData.longitude);
     console.log("Latitude:", typeof formData.latitude,formData.latitude);    */
+    sethandleButtonState(true);
     try {
      const response = await axios.post(userApi, formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      sethandleButtonState(true);
+      
       console.log("The data sending"+formData+" url "+userApi);
      
       toast.success(
@@ -193,22 +227,18 @@ function ProviderRegistration() {
           JSON.stringify(response.data, null, 2) || "Error"
         }  `,
         {
-          position: "top-right",
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          onClose:()=>navigate("/login")
+       
         }
       );
+      navigate("/login");
      
      
    
      
 
     } catch (error) {
-      console.log("The data sending"+formData+" url "+userApi);
+      //console.log("The data sending"+formData+" url "+userApi);
+      sethandleButtonState(false);
       toast.error(
         `Registration Response: ${ 
           error.response?.data?.status || "Something went wrong!"
@@ -218,21 +248,17 @@ function ProviderRegistration() {
           Object.keys(error.response?.data.errors || {}).join(", ")
         } `,
         {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+          
         }
       );
        }
   };
 
   return (
-   
+<> 
+
 <div className="d-flex justify-content-center align-items-center vh-150" style={{paddingTop: "10px" , paddingBottom:"10px"}}>
-<ToastContainer
+{/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -242,529 +268,532 @@ function ProviderRegistration() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
 {step==1 && (
-  <div
-    className="card shadow-lg p-5"
-    style={{
-      width: "100%",
-      maxWidth: "600px",
-      borderRadius: "15px",
-      background:" #eceaeab7",
-      color: "black",
-    }}
-  >
-    <h2 className="text-center mb-4" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
-      Provider Registration
-    </h2>
-    <hr></hr><div className="d-flex justify-content-start"> <h4 className="text-secondary text-right">Personal Details</h4></div>
-    <br></br>
-      <form onSubmit={handleNextStep}>
-      <div className="row g-3">
-        {/* User Name */}
-        <div className="col-md-6">
-          <label htmlFor="userName" className="form-label">
-            User Name <span className="text-danger">*</span>
-          </label>
-          <input
-            type="text"
-            id="userName"
-            name="userName"
-            value={formData.userName}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+   <div
+   className="card shadow-lg p-5"
+   style={{
+     width: "100%",
+     maxWidth: "600px",
+     borderRadius: "15px",
+     background:" #eceaeab7",
+     color: "black",
+   }}
+ >
+   <h2 className="text-center mb-4" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
+     Provider Registration
+   </h2>
+   <hr></hr><div className="d-flex justify-content-start"> <h4 className="text-secondary text-right">Personal Details</h4></div>
+   <br></br>
+     <form onSubmit={handleNextStep}>
+     <div className="row g-3">
+       {/* User Name */}
+       <div className="col-md-6">
+         <label htmlFor="userName" className="form-label">
+           User Name <span className="text-danger">*</span>
+         </label>
+         <input
+           type="text"
+           id="userName"
+           name="userName"
+           value={formData.userName}
+           onChange={handleChange}
+           className="form-control"
+           required
+         />
+       </div>
 
-        {/* Phone Number */}
-        <div className="col-md-6">
-          <label htmlFor="phoneNumber" className="form-label">
-            Phone Number <span className="text-danger">*</span>
-          </label>
-          <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            minLength="10"
-            maxLength="13"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+       {/* Phone Number */}
+       <div className="col-md-6">
+         <label htmlFor="phoneNumber" className="form-label">
+           Phone Number <span className="text-danger">*</span>
+         </label>
+         <input
+           type="text"
+           id="phoneNumber"
+           name="phoneNumber"
+           minLength="10"
+           maxLength="13"
+           value={formData.phoneNumber}
+           onChange={handleChange}
+           className="form-control"
+           required
+         />
+       </div>
 
-        {/* Full Name */}
-        <div className="col-md-12">
-          <label className="form-label">
-            Full Name <span className="text-danger">*</span>
-          </label>
-          <div className="row g-2">
-            <div className="col-md-4">
-              <input
-                type="text"
-                id="firstName"
-                name="firstName"
-                 maxLength="22"
-                value={formData.firstName}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="First Name"
-                required
-              />
-            </div>
-            <div className="col-md-4">
-              <input
-                type="text"
-                id="middleName"
-                name="middleName"
-                value={formData.middleName}
-                 maxLength="22"
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Middle Name"
-              />
-            </div>
-            <div className="col-md-4">
-              <input
-                type="text"
-                id="lastName"
-                name="lastName"
-                value={formData.lastName}
-                 maxLength="22"
-                onChange={handleChange}
-                className="form-control"
-                placeholder="Last Name"
-              />
-            </div>
-          </div>
-        </div>
+       {/* Full Name */}
+       <div className="col-md-12">
+         <label className="form-label">
+           Full Name <span className="text-danger">*</span>
+         </label>
+         <div className="row g-2">
+           <div className="col-md-4">
+             <input
+               type="text"
+               id="firstName"
+               name="firstName"
+                maxLength="22"
+               value={formData.firstName}
+               onChange={handleChange}
+               className="form-control"
+               placeholder="First Name"
+               required
+             />
+           </div>
+           <div className="col-md-4">
+             <input
+               type="text"
+               id="middleName"
+               name="middleName"
+               value={formData.middleName}
+                maxLength="22"
+               onChange={handleChange}
+               className="form-control"
+               placeholder="Middle Name"
+             />
+           </div>
+           <div className="col-md-4">
+             <input
+               type="text"
+               id="lastName"
+               name="lastName"
+               value={formData.lastName}
+                maxLength="22"
+               onChange={handleChange}
+               className="form-control"
+               placeholder="Last Name"
+             />
+           </div>
+         </div>
+       </div>
 
-        {/* Email */}
-        <div className="col-md-6">
-          <label htmlFor="email" className="form-label">
-            Email <span className="text-danger">*</span>
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+       {/* Email */}
+       <div className="col-md-6">
+         <label htmlFor="email" className="form-label">
+           Email <span className="text-danger">*</span>
+         </label>
+         <input
+           type="email"
+           id="email"
+           name="email"
+           value={formData.email}
+           onChange={handleChange}
+           className="form-control"
+           required
+         />
+       </div>
 
-        {/* Password */}
-        <div className="col-md-6">
-          <label htmlFor="password" className="form-label">
-            Password <span className="text-danger">*</span>
-          </label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            minLength="8"
-            maxLength="20"
-            value={formData.password}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
+       {/* Password */}
+       <div className="col-md-6">
+         <label htmlFor="password" className="form-label">
+           Password <span className="text-danger">*</span>
+         </label>
+         <input
+           type="password"
+           id="password"
+           name="password"
+           minLength="8"
+           maxLength="20"
+           value={formData.password}
+           onChange={handleChange}
+           className="form-control"
+           required
+         />
+       </div>
 
-        {/* Address */}
-        {/* Address Details */}
-        
-<div className="col-md-12">
-  <label htmlFor="area" className="form-label">
-    Area 
-  </label>
-  <input
-    type="text"
-    id="area"
-    name="area"
-    value={formData.area}
-    onChange={handleChange}
-    className="form-control"
-    
-  />
-</div>
-
-<div className="col-md-6">
-  <label htmlFor="city" className="form-label">
-    City <span className="text-danger">*</span>
-  </label>
-  <input
-    type="text"
-    id="city"
-    name="city"
-    value={formData.city}
-     maxLength="20"
-    onChange={handleChange}
-    className="form-control"
-    required
-  />
-</div>
-
-<div className="col-md-6">
-  <label htmlFor="district" className="form-label">
-    District <span className="text-danger">*</span>
-  </label>
-  <input
-    type="text"
-    id="district"
-    name="district"
-     maxLength="20"
-    value={formData.district}
-    onChange={handleChange}
-    className="form-control"
-    required
-  />
-</div>
-<div className="col-md-6">
-  <label htmlFor="pinCode" className="form-label">
-    PinCode <span className="text-danger">*</span>
-  </label>
-  <input
-    type="number"
-    id="pinCode"
-    name="pinCode"
-    min="111111"
-    max="999999"
-    value={formData.pinCode}
-    onChange={handleChange}
-    className="form-control"
-    required
-  />
-</div>
-<div className="col-md-6">
-  
-  <label htmlFor="state" className="form-label">
-    State <span className="text-danger">*</span>
-  </label>
-  <input
-    type="text"
-    id="state"
-    name="state"
-     maxLength="20"
-    value={formData.state}
-    onChange={handleChange}
-    className="form-control"
-    required
-  />
-</div>
-
-
-        
-      </div>
-
-      {/* Submit Button */}
-      <div className="mt-4">
-        <button type="submit"  className="btn btn-primary w-100" style={{ borderRadius: "10px" }}>
-          Next 
-        </button>
+       {/* Address */}
+       {/* Address Details */}
        
-      </div>
-      </form>
-  </div>
+<div className="col-md-12">
+ <label htmlFor="area" className="form-label">
+   Area 
+ </label>
+ <input
+   type="text"
+   id="area"
+   name="area"
+   value={formData.area}
+   onChange={handleChange}
+   className="form-control"
+   
+ />
+</div>
+
+<div className="col-md-6">
+ <label htmlFor="city" className="form-label">
+   City <span className="text-danger">*</span>
+ </label>
+ <input
+   type="text"
+   id="city"
+   name="city"
+   value={formData.city}
+    maxLength="20"
+   onChange={handleChange}
+   className="form-control"
+   required
+ />
+</div>
+
+<div className="col-md-6">
+ <label htmlFor="district" className="form-label">
+   District <span className="text-danger">*</span>
+ </label>
+ <input
+   type="text"
+   id="district"
+   name="district"
+    maxLength="20"
+   value={formData.district}
+   onChange={handleChange}
+   className="form-control"
+   required
+ />
+</div>
+<div className="col-md-6">
+ <label htmlFor="pinCode" className="form-label">
+   PinCode <span className="text-danger">*</span>
+ </label>
+ <input
+   type="number"
+   id="pinCode"
+   name="pinCode"
+   min="111111"
+   max="999999"
+   value={formData.pinCode}
+   onChange={handleChange}
+   className="form-control"
+   required
+ />
+</div>
+<div className="col-md-6">
+ 
+ <label htmlFor="state" className="form-label">
+   State <span className="text-danger">*</span>
+ </label>
+ <input
+   type="text"
+   id="state"
+   name="state"
+    maxLength="20"
+   value={formData.state}
+   onChange={handleChange}
+   className="form-control"
+   required
+ />
+</div>
+
+
+       
+     </div>
+
+     {/* Submit Button */}
+     <div className="mt-4">
+       <button type="submit"  className="btn btn-primary w-100" style={{ borderRadius: "10px" }}>
+         Next 
+       </button>
+      
+     </div>
+     </form>
+ </div>
 )}
 {step==2 && (
-  
-  <div
-    className="card shadow-lg p-5"
-    style={{
-      width: "100%",
-      maxWidth: "600px",
-      borderRadius: "15px",
-      background:" #eceaeab7",
-      color: "black",
-    }}
-  >
-    <h2 className="text-center mb-4" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
-      Provider Registration
-    </h2>
-    <hr></hr><div className="d-flex justify-content-start"> <h4 className="text-secondary text-right">Professional Deatils</h4></div>
-    <br></br>
-    
-      <div className="row g-3">
-      
-      <div className="container">
-     
-      <div className="col-md-12">
-        <label htmlFor="professionType" className="form-label">
-          Profession Type<span className="text-danger"> *</span>
-        </label>
-        
-        <select
-          id="professionType"
-          name="professionType"
-          value={formData.professionType}
-          onChange={handleProfessionChange}
-          className="form-select"
-          required
-        >
-          <option value="">Select Profession</option>
-          {professionList.map((profession, index) => (
-            <option key={index} value={profession}>
-              {profession}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-<div className="col-md-6">
-  <label htmlFor="yearOfEx" className="form-label">
-    Years of Experience 
-  </label>
-  <input
-    type="number"
-    id="yearOfEx"
-    name="yearOfEx"
-    min="0"
-    max="30"
-    value={formData.yearOfEx}
-    onChange={handleChange}
-    className="form-control"
-    required
-  />
-</div>
-        
-
-        {/* Phone Number */}
-        <div className="col-md-6">
-  <label htmlFor="availability" className="form-label">
-    Availability 
-  </label>
-  <div className="form-check form-switch">
-    <input
-      type="checkbox"
-      className="form-check-input"
-      id="availability"
-      name="availability"
-      checked={formData.availability}
-      onChange={(e) =>
-        setformData({
-          ...formData,
-          availability: e.target.checked,
-        })
-      }
-      style={{
-        backgroundColor: formData.availability ? "green" : "red",
-        borderColor: formData.availability ? "green" : "red",
-      }}
-    />
-    <label
-      className="form-check-label"
-      htmlFor="availability"
-      style={{
-        color: formData.availability ? "green" : "red",
-        fontWeight: "bold",
-      }}
-    >
-      {formData.availability ? "Yes" : "No"}
-    </label>
-  </div>
-</div>
-
-
-        {/* skill */}
-        <div className="col-md-12">
-          <label className="form-label">
-            Skills 
-          </label>
-          <div className="row g-2">
-            <div className="col-md-4">
-              <input
-                type="text"
-                id="skill1"
-                name="skill1"
-                value={formData.skill1}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="skill1"
-                required
-              />
-            </div>
-            <div className="col-md-4">
-              <input
-                type="text"
-                id="skill2"
-                name="skill2"
-                value={formData.skill2}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="skill2"
-              />
-            </div>
-            <div className="col-md-4">
-              <input
-                type="text"
-                id="skill3"
-                name="skill3"
-                value={formData.skill3}
-                onChange={handleChange}
-                className="form-control"
-                placeholder="skill3"
-              />
-            </div>
-          </div>
-        </div>
-        {/*Bio*/}
-        <div className="col-md-12">
-  <label htmlFor="bio" className="form-label">
-    Bio
-  </label>
-  <textarea
-    id="bio"
-    name="bio"
-    value={formData.bio}
-    onChange={handleChange}
-    className="form-control"
-    rows="2" 
-    maxLength={100}
-    
-    placeholder="Write something about yourself..."
-  ></textarea>
-</div>
-
-        {/* Email */}
-        <div className="col-md-6">
-          <label htmlFor="languageSpoke" className="form-label">
-          Language Known 
-          </label>
-          <input
-            type="text"
-            id="languageSpoke"
-            name="languageSpoke"
-             maxLength="40"
-            value={formData.languageSpoke}
-            onChange={handleChange}
-            placeholder="enter languages ',' seperated"
-            className="form-control"
-            required
-          />
-        </div>
-
-       
-        <div className="col-md-6">
-          <label htmlFor="timeOfService" className="form-label">
-            Timing of Service 
-          </label>
-          <input
-            type="text"
-            id="timeOfService"
-            name="timeOfService"
-            placeholder="e.g., 9am-7pm"
-             maxLength="15"
-            value={formData.timeOfService}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
-        </div>
-
-     
-
-
-<div className="col-md-6">
-  <label htmlFor="socialLink1" className="form-label">
-  Social Link 1 
-  </label>
-  <input
-    type="text"
-    id="socialLink1"
-    name="socialLink1"
-     maxLength="30"
-    value={formData.socialLink1}
-    onChange={handleChange}
-    className="form-control"
-    placeholder="e.g., http://www.social.com"
-    
-  />
-</div>
-
-<div className="col-md-6">
-  <label htmlFor="socialLink2" className="form-label">
-  Social Link 2
-  </label>
-  <input
-    type="text"
-    id="socialLink2"
-    name="socialLink2"
-    maxLength="30"
-    value={formData.socialLink2}
-    onChange={handleChange}
-    className="form-control"
-     placeholder="e.g., http://www.social.com"
-
+ 
+ <div
+   className="card shadow-lg p-5"
+   style={{
+     width: "100%",
+     maxWidth: "600px",
+     borderRadius: "15px",
+     background:" #eceaeab7",
+     color: "black",
+   }}
+ >
+   <h2 className="text-center mb-4" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
+     Provider Registration
+   </h2>
+   <hr></hr><div className="d-flex justify-content-start"> <h4 className="text-secondary text-right">Professional Deatils</h4></div>
+   <br></br>
    
-  />
+     <div className="row g-3">
+     
+     <div className="container">
+    
+     <div className="col-md-12">
+       <label htmlFor="professionType" className="form-label">
+         Profession Type<span className="text-danger"> *</span>
+       </label>
+       
+       <select
+         id="professionType"
+         name="professionType"
+         value={formData.professionType}
+         onChange={handleProfessionChange}
+         className="form-select"
+         required
+       >
+         <option value="">Select Profession</option>
+         {professionList.map((profession, index) => (
+           <option key={index} value={profession}>
+             {profession}
+           </option>
+         ))}
+       </select>
+     </div>
+   </div>
+<div className="col-md-6">
+ <label htmlFor="yearOfEx" className="form-label">
+   Years of Experience 
+ </label>
+ <input
+   type="number"
+   id="yearOfEx"
+   name="yearOfEx"
+   min="0"
+   max="30"
+   value={formData.yearOfEx}
+   onChange={handleChange}
+   className="form-control"
+   required
+ />
+</div>
+       
+
+       {/* Phone Number */}
+       <div className="col-md-6">
+ <label htmlFor="availability" className="form-label">
+   Availability 
+ </label>
+ <div className="form-check form-switch">
+   <input
+     type="checkbox"
+     className="form-check-input"
+     id="availability"
+     name="availability"
+     checked={formData.availability}
+     onChange={(e) =>
+       setformData({
+         ...formData,
+         availability: e.target.checked,
+       })
+     }
+     style={{
+       backgroundColor: formData.availability ? "green" : "red",
+       borderColor: formData.availability ? "green" : "red",
+     }}
+   />
+   <label
+     className="form-check-label"
+     htmlFor="availability"
+     style={{
+       color: formData.availability ? "green" : "red",
+       fontWeight: "bold",
+     }}
+   >
+     {formData.availability ? "Yes" : "No"}
+   </label>
+ </div>
+</div>
+
+
+       {/* skill */}
+       <div className="col-md-12">
+         <label className="form-label">
+           Skills 
+         </label>
+         <div className="row g-2">
+           <div className="col-md-4">
+             <input
+               type="text"
+               id="skill1"
+               name="skill1"
+               value={formData.skill1}
+               onChange={handleChange}
+               className="form-control"
+               placeholder="skill1"
+               required
+             />
+           </div>
+           <div className="col-md-4">
+             <input
+               type="text"
+               id="skill2"
+               name="skill2"
+               value={formData.skill2}
+               onChange={handleChange}
+               className="form-control"
+               placeholder="skill2"
+             />
+           </div>
+           <div className="col-md-4">
+             <input
+               type="text"
+               id="skill3"
+               name="skill3"
+               value={formData.skill3}
+               onChange={handleChange}
+               className="form-control"
+               placeholder="skill3"
+             />
+           </div>
+         </div>
+       </div>
+       {/*Bio*/}
+       <div className="col-md-12">
+ <label htmlFor="bio" className="form-label">
+   Bio
+ </label>
+ <textarea
+   id="bio"
+   name="bio"
+   value={formData.bio}
+   onChange={handleChange}
+   className="form-control"
+   rows="2" 
+   maxLength={100}
+   
+   placeholder="Write something about yourself..."
+ ></textarea>
+</div>
+
+       {/* Email */}
+       <div className="col-md-6">
+         <label htmlFor="languageSpoke" className="form-label">
+         Language Known 
+         </label>
+         <input
+           type="text"
+           id="languageSpoke"
+           name="languageSpoke"
+            maxLength="40"
+           value={formData.languageSpoke}
+           onChange={handleChange}
+           placeholder="enter languages ',' seperated"
+           className="form-control"
+           required
+         />
+       </div>
+
+      
+       <div className="col-md-6">
+         <label htmlFor="timeOfService" className="form-label">
+           Timing of Service 
+         </label>
+         <input
+           type="text"
+           id="timeOfService"
+           name="timeOfService"
+           placeholder="e.g., 9am-7pm"
+            maxLength="15"
+           value={formData.timeOfService}
+           onChange={handleChange}
+           className="form-control"
+           required
+         />
+       </div>
+
+    
+
+
+<div className="col-md-6">
+ <label htmlFor="socialLink1" className="form-label">
+ Social Link 1 
+ </label>
+ <input
+   type="text"
+   id="socialLink1"
+   name="socialLink1"
+    maxLength="30"
+   value={formData.socialLink1}
+   onChange={handleChange}
+   className="form-control"
+   placeholder="e.g., http://www.social.com"
+   
+ />
+</div>
+
+<div className="col-md-6">
+ <label htmlFor="socialLink2" className="form-label">
+ Social Link 2
+ </label>
+ <input
+   type="text"
+   id="socialLink2"
+   name="socialLink2"
+   maxLength="30"
+   value={formData.socialLink2}
+   onChange={handleChange}
+   className="form-control"
+    placeholder="e.g., http://www.social.com"
+
+  
+ />
 </div>
 {/* User Name */}
 <div className="col-md-6">
-          <label htmlFor="areaServe" className="form-label">
-          Area Serve's 
-          </label>
-          <input
-            type="text"
-            id="areaServe"
-            maxLength="40"
-            name="areaServe"
-            value={formData.areaServe}
-            onChange={handleChange}
-            className="form-control"
-           
-          />
-        </div>
-        <div className="col-md-6">
-      <label htmlFor="latitudeLongitude" className="form-label">
-        Location Coordinates <span className="text-danger">*</span>
-      </label>
-      <div className="input-group">
-        <input
-          type="text"
-          id="latitudeLongitude"
-          name="latitudeLongitude"
-          value={`${formData.latitude} , ${formData.longitude}`}
-          onChange={handleChange1}
-          className="form-control"
-          required
-        />
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={fetchCurrentLocation}
-        >
-          <i className="bi bi-geo-alt-fill me-1"></i>Get
-        </button>
-      </div>
-    </div>
+         <label htmlFor="areaServe" className="form-label">
+         Area Serve's 
+         </label>
+         <input
+           type="text"
+           id="areaServe"
+           maxLength="40"
+           name="areaServe"
+           value={formData.areaServe}
+           onChange={handleChange}
+           className="form-control"
+          
+         />
+       </div>
+       <div className="col-md-6">
+     <label htmlFor="latitudeLongitude" className="form-label">
+       Location Coordinates <span className="text-danger">*</span>
+     </label>
+     <div className="input-group">
+       <input
+         type="text"
+         id="latitudeLongitude"
+         name="latitudeLongitude"
+         value={`${formData.latitude} , ${formData.longitude}`}
+         onChange={handleChange1}
+         className="form-control"
+         required
+       />
+       <button
+         type="button"
+         className="btn btn-primary"
+         onClick={fetchCurrentLocation}
+       >
+         <i className="bi bi-geo-alt-fill me-1"></i>Get
+       </button>
+     </div>
+   </div>
 
 
 
-   {/* Submit Button */}
-   <div className="col-md-6">
-      <button type="submit" onClick={handlePreviousStep} className="btn btn-primary w-100" style={{ borderRadius: "10px" }}>
-          Previous 
-        </button>
-        </div>
-        <div className="col-md-6">
-        <button type="submit" onClick={handleSubmit} className="btn btn-primary w-100 " disabled={handleButtonState} style={{ borderRadius: "10px" }}>
-        {handleButtonState ? "Processing..." : "Register"}
-        </button>
-      
-      </div>
-        
-      </div>
+  {/* Submit Button */}
+  <div className="col-md-6">
+     <button type="submit" onClick={handlePreviousStep} className="btn btn-primary w-100" style={{ borderRadius: "10px" }}>
+         Previous 
+       </button>
+       </div>
+       <div className="col-md-6">
+       <button type="submit" onClick={handleSubmit} className="btn btn-primary w-100 " disabled={handleButtonState} style={{ borderRadius: "10px" }}>
+       {handleButtonState ? "Hang on ! We are almost there.." : "Register"}
+       </button>
+     
+     </div>
+       
+     </div>
 
-      
-    
-  </div>
+     
+   
+ </div>
 )}
-</div>
+ </div>
+ </>
+
+  
 
   
   );

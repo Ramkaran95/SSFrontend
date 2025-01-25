@@ -1,31 +1,48 @@
 // src/components/Footer.js
 import React from 'react';
-import 'font-awesome/css/font-awesome.min.css';  // Import Font Awesome icons
+import 'font-awesome/css/font-awesome.min.css';
+import { FiPhoneCall } from "react-icons/fi";
+import { TfiEmail } from "react-icons/tfi";  // Import Font Awesome icons
+import { SlLocationPin } from "react-icons/sl";
 
-const FooterSection = () => {
+const FooterSection=()=>{
   return (
     <footer className="bg-dark text-white py-5 mt-5">
       <div className="container">
         <div className="row">
-          <div className="col-md-6">
+        <div className="col-md-4 text-md-start"> 
          
-   
+
  <h5 className="mb-3"> <img
-      src="/LG2.png"
+      src="/LP3.png"
       alt="Site Logo"
-      style={{ height: "30px", marginBottom: "10px" }}
+      style={{ height: "30px", marginBottom: "10px",textAlign:'left' }}
     /> &nbsp;ServiceSeeker</h5>
-            <p>Your go-to platform for finding reliable service providers near you. We connect customers with skilled service providers in various fields.</p>
+    <p className='text-left'>We bring the best of professional home <br />services right to your doorstep.
+      <br/>Whether it's a cleaning, beauty treatment,<br /> or repair, we ensure quality, convenience and trust.</p>
           </div>
-          <div className="col-md-6 text-md-end">
-            <h6 className="mb-3">Quick Links</h6>
+          <div className='col-md-4'>
+          <h6 className="mb-3"> Quick Links</h6>
+          <ul className="list-unstyled"> 
+          <li><a href="/terms" className="text-white text-decoration-none">Terms of Service</a></li>
+          <li><a href="/privacy" className="text-white text-decoration-none">Privacy Policy</a></li> 
+          <li><a href="/contact" className="text-white text-decoration-none">Contact Us</a></li>
+           <li><a href="/about" className="text-white text-decoration-none">About</a></li>
+           
+           </ul>
+           </div>
+           <div className="col-md-4">
+            <h6 className="mb-3">Contact Info</h6>
             <ul className="list-unstyled">
-              <li><a href="/terms" className="text-white text-decoration-none">Terms of Service</a></li>
-              <li><a href="/privacy" className="text-white text-decoration-none">Privacy Policy</a></li>
+              <li><FiPhoneCall className='i'/> +91 9956783376 </li>
+              <li><TfiEmail className='i' />   serviceseeker@gmail.com</li>
+              <li><SlLocationPin className='i'/>  Maharashtra,India</li>
               <li><a href="/contact" className="text-white text-decoration-none">Contact Us</a></li>
             </ul>
           </div>
         </div>
+      
+          
         <div className="row mt-4">
           <div className="col-md-12 text-center">
             <h6>Follow Us</h6>
@@ -58,7 +75,9 @@ const FooterSection = () => {
         </div>
       </div>
     </footer>
+
   );
-};
+}
 
 export default FooterSection;
+

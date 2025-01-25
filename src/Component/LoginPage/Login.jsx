@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { ToastContainer ,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from 'react-router-dom';
+import NavBar from '../HomePage/NavBar';
+import FooterSection from '../HomePage/FooterSection';
+import Spinner from '../../Spinner';
 //import ToastComponent from '../ToastComponent';
 function Login() {
     const navigate = useNavigate(); // Hook for navigation
@@ -37,6 +40,8 @@ function Login() {
   // Handle user login
   const userLogin = async (loginData,url) => {
     try {
+    sethandleButtonState(true);
+
       const response = await axios.post(url, loginData, {
         headers: {
           "Content-Type": "application/json",
@@ -45,28 +50,25 @@ function Login() {
       console.log("Login Successful:", response.data);
      // setToastMessage("Login Successful!\n"+"Welcome " + response.data.firstName );
      // setToastType("success");
-      sethandleButtonState(true);
+      
       const path=accountType=== "user"? "/userDashboard":"/providerDashboard";
       toast.success(
         `Login Response: ${"Welcome "+
          response.data.firstName
         }  `,
         {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          onClose:()=>navigate(path)
+         
+        
               }
       );
+      navigate(path);
       
    
-      // Handle successful login (e.g., save user details to state or redirect)
+      /// Handle successful login (e.g., save user details to state or redirect)
       return response.data;
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
+      sethandleButtonState(false);
     //  setToastMessage("Login Failed: " + (error.response?.data || error.message));
      // setToastType("danger");
       toast.error(
@@ -74,12 +76,7 @@ function Login() {
           error.response?.data || "Invalid Credential..!"
         }`,
         {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+         
         }
       );
 
@@ -98,9 +95,14 @@ const [handleButtonState ,sethandleButtonState]=useState(false);
   };
 
   return (
+  <>  <div>
+      <NavBar />
+    </div>
+   
+  <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+  <Spinner visible={handleButtonState}/>
     
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-      <ToastContainer
+      {/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -110,7 +112,7 @@ const [handleButtonState ,sethandleButtonState]=useState(false);
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
 
          <div className="card shadow-lg p-4" style={{ width: "350px", borderRadius: "20px" }}>
         {/* Header */}
@@ -182,6 +184,9 @@ const [handleButtonState ,sethandleButtonState]=useState(false);
         </div>
       </div>
     </div>
+    
+    <div><FooterSection /></div>
+    </>
   );
 }
 

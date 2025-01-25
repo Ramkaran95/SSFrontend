@@ -15,6 +15,8 @@ import ForgetPassword from './Component/ForgetPage/ForgetPassword.jsx'
 import Register from './Component/Register/Register.jsx'
 import UserRegistration from './Component/Registration/UserRegistration.jsx'
 import ProviderRegistration from './Component/Registration/ProviderRegistration.jsx'
+import Contact from './Component/ContactPage/Contact.jsx';
+
 
 
 
@@ -31,6 +33,8 @@ const router = createBrowserRouter(
     <Route path="/register" element={<Register/>}/>
     <Route path="/register/userRegistration" element={<UserRegistration/>}/>
     <Route path="/register/providerRegistration" element={<ProviderRegistration/>}/>
+    <Route path="/contact" element={<Contact/>}/>
+   
     
    
 
@@ -49,6 +53,21 @@ const router = createBrowserRouter(
 );
 createRoot(document.getElementById('root')).render(
   <StrictMode>
+    <>
+    <ToastContainer
+position="top-center"
+autoClose={3000}
+hideProgressBar={true}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+theme='dark'
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
+
     <RouterProvider router={router}/>
+    </>
   </StrictMode>
 );

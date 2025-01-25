@@ -1,8 +1,12 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import FooterSection from "../HomePage/FooterSection";
+import NavBar from "../HomePage/NavBar";
 
 const About = () => {
   return (
+    <>
+    <p><NavBar /></p>
     <div className="container-fluid my-5 " >
       {/* Page Header */}
       <header className="text-center mb-5 ">
@@ -15,15 +19,15 @@ const About = () => {
       {/* About Section */}
       <section className=" row align-items-center mb-5">
         <div className="container col-md-5 mb-4 mb-md-0">
-          <h2 className="text-secondary">Who We Are</h2>
+          <h2 className="text-secondary">Who Are We?</h2>
           <p>
             Service Seeker is your trusted platform for finding reliable service
-            providers in your area. From home repairs to professional
-            consultations, we aim to make your search easy and efficient.
+            providers<br/> in your area. From home repairs to professional
+            consultations,<br/> we aim to make your search easy and efficient.
           </p>
           <p>
             Our mission is to bridge the gap between users and providers,
-            offering a user-friendly interface, verified listings, and secure
+            offering a <br/>user-friendly interface, verified listings, and secure
             transactions.
           </p>
         </div>
@@ -45,7 +49,7 @@ const About = () => {
             <br></br>
             <h4 className="text-primary">The Problem</h4>
             <p>
-              Finding trustworthy service providers used to be a hassle. Users
+              Finding trustworthy service providers used to be a hassle. Users<br/>
               struggled with unverified listings, unclear pricing, and time-
               consuming processes.
             </p>
@@ -70,7 +74,7 @@ const About = () => {
             <h4 className="text-primary">The Solution</h4>
             <p>
               Service Seeker simplifies the process by connecting users with
-              verified, reliable providers, offering clear pricing and a
+              verified,<br/> reliable providers, offering clear pricing and a
               seamless booking experience.
             </p>
             <ul>
@@ -98,18 +102,18 @@ const About = () => {
           <div className="container col-md-4">
             <h5 className="text-primary">Showcase Your Skills</h5>
             <p>
-              Service Seeker provides a platform for professionals to
-              demonstrate their expertise through detailed profiles, photos,
+              Service Seeker provides a platform for professionals <br />to
+              demonstrate their expertise through detailed profiles,<br /> photos,
               and customer reviews.
             </p>
             <h5 className="text-primary">Connect with More Customers</h5>
             <p>
-              Expand your reach and connect with a growing community of
+              Expand your reach and connect with a growing community<br/> of
               potential clients actively seeking your services.
             </p>
             <h5 className="text-primary">Market Your Services</h5>
             <p>
-              Take advantage of our site to promote your offerings and gain
+              Take advantage of our site to promote your offerings<br/> and gain
               visibility in competitive markets.
             </p>
           </div>
@@ -165,18 +169,10 @@ const About = () => {
       </section>  
 
 
-      {/* Footer */}
-      <footer className="mt-5 py-4 bg-dark text-white text-center">
-      <div>
- 
-  </div>
-        <p className="mb-0">&copy; 2025 <img
-      src="/LG2.png"
-      alt="Site Logo"
-      style={{ height: "25px", marginBottom: "10px" }}
-    />   &nbsp;Service Seeker. All Rights Reserved.</p>
-      </footer>
+      
     </div>
+    <p><FooterSection /></p>
+    </>
   );
 };
 

@@ -16,4 +16,6 @@
     color: #ffd700; /* Change icon color on hover to gold */
     transition: color 0.3s ease;
   }
-  
+  .i{
+    padding:3rem;
+  }

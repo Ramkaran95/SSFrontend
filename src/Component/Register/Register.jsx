@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from "../HomePage/NavBar";
+import FooterSection from "../HomePage/FooterSection";
 
 function Register() {
   const navigate = useNavigate(); // Hook for navigation
@@ -23,6 +25,8 @@ function Register() {
   };
 
   return (
+    <>
+    <div><NavBar /></div>
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <div className="card shadow-lg p-4" style={{ width: "350px", borderRadius: "20px" }}>
         {/* Header */}
@@ -59,6 +63,8 @@ function Register() {
         </form>
       </div>
     </div>
+    <div><FooterSection /></div>
+    </>
   );
 }
 

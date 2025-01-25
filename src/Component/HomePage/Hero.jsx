@@ -1,19 +1,54 @@
-import React from 'react';
+import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Hero.css'; // Assuming you will add custom styles
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { HiLocationMarker } from 'react-icons/hi';
+import { FaSearch } from 'react-icons/fa';
 function Hero() {
+  const navigate = useNavigate()
+  const handleSearch=()=>{
+    navigate("/UserDashboard")
+
+  }
   return (
-    <section className="hero-section">
-      <div className="container text-center text-white hero-content">
-        <h1 className="display-4 mb-3">Welcome to Service Seeker</h1>
-        <p className="lead mb-4">Connecting service providers with customers effortlessly.</p>
-        <NavLink className={(e) =>{return e.isActive ? "btn btn-light btn-lg hero-btn" : "btn btn-light btn-lg hero-btn hero-btn"}}to="/about">
-             Learn More
-            </NavLink>
-      
-      </div>
+    <section className="hero-wrapper">
+      <div className='paddings innerwidth flexCenter hero-container '>
+        {/*Left Section*/}
+
+        <div className='flexColStart hero-left'>
+          <div className='hero-title'>
+            <div className='blue-circle'/>
+            <h1>
+              Now Get Services<br/>
+              At Your Doorstep!
+              
+            </h1>
+        </div>
+        <div className='flexColStart hero-des'>
+          <span>Find experienced and reliable experts for all your needs-
+          </span>
+          <span>We have got the right professionals ready for you.</span>
+          <span>Start your search now!</span>
+        </div>
+        <div className=' search-bar'>
+          <FaSearch display='inline-block' color='aqua' size={25}/>
+          <input type='text' placeholder='Find Experts eg:- painter,carpenter,plumber,etc'
+          onChange={e=>setLocation(e.target.value)}/>
+          <button className="button" onClick={handleSearch}>Search</button>
+
+        </div>
+        </div>
+
+        <div className='flexCenter hero-right'>
+          <div className='image-container'>
+            <img src='./hero-img.png' alt='' />
+           
+          </div>
+        </div>
+
+       </div>
     </section>
+  
   );
 }
 

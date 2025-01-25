@@ -1,0 +1,119 @@
+/*{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins",sans-serif;
+
+}*/
+.contact{
+    position: relative;
+    min-height: 100vh;
+    padding: 50px 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+   /* background: ; */
+   background-color: rgb(23, 28, 78);
+   background-size: cover;
+}
+
+.contentt{
+    color: #fff;
+    max-width: 800px;
+    text-align: center;  
+}
+
+.contentt>h2{
+    font-size: 36px;
+    font-weight: 500;
+}
+.contentt>p{
+    font-weight: 300;
+}
+.containerr{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+.conactInfo{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.box{
+    position: relative;
+    padding: 20px 0;
+    display: flex;
+}
+.iconn{
+    min-width: 80px;
+    height: 70px;
+    background: #fff;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 80%;
+    font-size: 22px;
+}
+.textt{
+    text-align: left;
+    display: flex;
+    margin-left: 20px;
+    font-size: 16px;
+    color:#fff; 
+    flex-direction: column;
+    font-weight: 300;
+}
+
+.textt>h3{
+    font-weight:500;
+    color: #00bcd4;
+
+}
+.contactForm{
+    width: 40%;
+    padding: 40px;
+    background: #fff;
+}
+.contactForm>h2{
+    font-size: 30px;
+    color: #333;
+    font-weight: 500;
+}
+.contactForm .inputBox{
+    position: relative;
+    width:100%;
+    margin-top: 10px;
+}
+.inputBox>input,textarea{
+    width: 100%;
+    padding: 5px 0;
+    font-size: 16px;
+    margin: 10px 0;
+    border: none;
+    border-bottom: 2px solid #333;
+    outline: none;
+    resize: none;
+}
+.spann{
+    position: absolute;
+    left:0;
+    padding: 5px 0;
+    font-size: 16px;
+    margin: 10px 0;
+    pointer-events: none;
+    transition: 0.5%;
+    color: #666;
+
+}
+.inputBox>input:focus~.spann,:valid~.spann,
+.inputBox>textarea:focus~.spann,:valid~.spann{
+    color: #e91e63;
+    font-size: 12px;
+    transform: translateY(-20px);
+}
+

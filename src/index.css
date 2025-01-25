@@ -14,6 +14,20 @@
 }
 
 
+.title { /*Styling for the title*/
+  margin:0px;
+  padding: 0px;
+  color: white;
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-style: normal;
+  text-align: center;
+  font-size: 2.5rem;
+  letter-spacing: 0.5px;
+  line-height: 0.2;
+  display: block;
+ 
+}
 
 body {
  
@@ -23,5 +37,105 @@ body {
   min-width: 320px;
   min-height: 100vh;
   
+  
+}
+.login-icon{
+  padding-right: 4px;
+  font-size: 25px;
+}
+.input-wrapper{
+  
+  background:  white;
+  width: 20rem;
+  border-radius: 10px;
+  margin-top: 5px;
+  
+  height: 2.5rem;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  bottom: 10px;
+
+}
+/*
+input{
+  background-color: white;
+  color:blue;
+  border:none;
+  height: 100%;
+  font-size: 1.25rem;
+  width: 100%;
+  margin-left: 5px;
+}
+
+input:focus{
+  outline: none;
+}
+*/
+.paddings{
+  padding: 1.5rem
+}
+
+.innerwidth{
+  width: 100%
+}
+
+.flexCenter{
+  display: flex;
+  row-gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.flexStart{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.flexEnd{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.flexColCenter{
+  display: flex;
+  justify-content: center;
+  flex-direction:column;
+  align-items: center;
+}
+.flexColStart{
+  display: flex;
+  justify-content: center;
+  flex-direction:column;
+  align-items: flex-start;
+}
+.flexColEnd{
+  display: flex;
+  justify-content: center;
+  flex-direction:column;
+  align-items: flex-end;
+}
+
+/*Media Queries*/
+@media (min-width:1536px) {
+  .innerwidth{
+    max-width: 1280px;
+    margin: auto;
+  }
+  
+}
+@media (min-width: 640px) {
+  .paddings{
+    padding: 4rem;
+  }
+}
+
+@media (min-width: 1280px),(min-width: 768px) {
+  .paddings{
+    padding: 2rem;
+  }
   
 }

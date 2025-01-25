@@ -43,34 +43,31 @@ function UserRegistration() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("The data sending"+formData.userId+" url "+userApi);
-     
+    
     try {
+      sethandleButtonState(true);
      const response = await axios.post(userApi, formData, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      sethandleButtonState(true);
-      console.log("The data sending"+formData+" url "+userApi);
+     
+      //console.log("The data sending"+formData+" url "+userApi);
        toast.success(
         `Registration Response: -${
           JSON.stringify(response.data, null, 2) || "Error"
         }  `,
         {
-          position: "top-right",
-          autoClose: 2500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          onClose:()=>navigate("/login")
+         
         }
       );
+      navigate("/login");
 
      
 
     } catch (error) {
-      alert("Registration Failed: " + (error.response?.data.message|| error.message)+error.body);
+     // alert("Registration Failed: " + (error.response?.data.message|| error.message)+error.body);
+     sethandleButtonState(false);
       toast.error(
         `Registration Response: ${ 
           error.response?.data?.status || "Something went wrong!"
@@ -80,12 +77,7 @@ function UserRegistration() {
           Object.keys(error.response?.data.errors || {}).join(", ")
         } `,
         {
-          position: "top-right",
-          autoClose: 5000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
+         
         }
       );
     }
@@ -93,7 +85,7 @@ function UserRegistration() {
 
   return (
 <div className="d-flex justify-content-center align-items-center vh-150" style={{paddingTop: "10px" , paddingBottom:"10px"}}>
-<ToastContainer
+{/* <ToastContainer
         position="top-right"
         autoClose={3000}
         hideProgressBar={false}
@@ -103,7 +95,7 @@ function UserRegistration() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      /> */}
 
   <div
     className="card shadow-lg p-5"
@@ -318,7 +310,7 @@ function UserRegistration() {
       {/* Submit Button */}
       <div className="mt-4">
         <button type="submit" className="btn btn-primary w-100" disabled={handleButtonState} style={{ borderRadius: "10px" }}>
-        {handleButtonState ? "Processing..." : "Register"}
+        {handleButtonState ? "Hang on ! We are almost there.." : "Register"}
         </button>
       </div>
     </form>
