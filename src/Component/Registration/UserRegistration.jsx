@@ -4,6 +4,7 @@ import axios from "axios";
 import { ToastContainer ,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
+import Spinner from '../../Spinner';
 
 function UserRegistration() {
     const navigate= useNavigate();
@@ -84,6 +85,7 @@ function UserRegistration() {
   };
 
   return (
+    
 <div className="d-flex justify-content-center align-items-center vh-150" style={{paddingTop: "10px" , paddingBottom:"10px"}}>
 {/* <ToastContainer
         position="top-right"
@@ -96,7 +98,7 @@ function UserRegistration() {
         draggable
         pauseOnHover
       /> */}
-
+  <Spinner visible={handleButtonState}/>
   <div
     className="card shadow-lg p-5"
     style={{
@@ -124,10 +126,11 @@ function UserRegistration() {
             type="text"
             id="userName"
             name="userName"
-            value={formData.userName}
+            value={""+formData.userName}
             onChange={handleChange}
             className="form-control"
             required
+            
           />
         </div>
 
@@ -137,14 +140,23 @@ function UserRegistration() {
             Phone Number <span className="text-danger">*</span>
           </label>
           <input
-            type="text"
-            id="phoneNumber"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            className="form-control"
-            required
-          />
+  type="number"
+  id="phoneNumber"
+  name="phoneNumber"
+ 
+  value={formData.phoneNumber}
+  onChange={handleChange}
+  className="form-control"
+  required
+   min="1111111111"
+  max="9999999999"
+   onInvalid={(e) =>
+    e.target.setCustomValidity("Phone number must of 10 Digit.")
+  }
+  onInput={(e) => e.target.setCustomValidity("")}
+  
+ />
+
         </div>
 
         {/* Full Name */}
@@ -279,12 +291,18 @@ function UserRegistration() {
     type="number"
     id="pinCode"
     name="pinCode"
-    min="111111"
-    max="999999"
+   
     value={formData.pinCode}
     onChange={handleChange}
     className="form-control"
     required
+     min="111111"
+    max="999999"
+    onInvalid={(e) =>
+      e.target.setCustomValidity("Pincode must of 6 Digit.")
+    }
+    onInput={(e) => e.target.setCustomValidity("")}
+    
   />
 </div>
 <div className="col-md-6">

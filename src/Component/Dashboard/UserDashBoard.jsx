@@ -5,6 +5,7 @@ import TimePicker from 'react-time-picker';
 import NavBar from '../HomePage/NavBar';
 import FooterSection from '../HomePage/FooterSection';
 import SearchItem from './SearchItem/SearchItem';
+import PersonalInfo from '../Update/PersonalInfo';
 function UserDashBoard() {
    
   const [valuee,setValuee]=useState(new Date())
@@ -67,6 +68,7 @@ function UserDashBoard() {
 
   return (
     <div>
+        <PersonalInfo/>
     <NavBar/>
     {/*SEARCH SECTION*/}
     <div className="listContainer">

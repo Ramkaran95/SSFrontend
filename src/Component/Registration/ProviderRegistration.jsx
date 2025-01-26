@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer ,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../HomePage/NavBar";
+import Spinner from '../../Spinner';
 function ProviderRegistration() {
   const [value,setValue]=useState('')
   const options = [
@@ -255,8 +256,7 @@ function ProviderRegistration() {
   };
 
   return (
-<> 
-
+<>
 <div className="d-flex justify-content-center align-items-center vh-150" style={{paddingTop: "10px" , paddingBottom:"10px"}}>
 {/* <ToastContainer
         position="top-right"
@@ -269,6 +269,7 @@ function ProviderRegistration() {
         draggable
         pauseOnHover
       /> */}
+       <Spinner visible={handleButtonState}/>
 {step==1 && (
    <div
    className="card shadow-lg p-5"
@@ -309,15 +310,21 @@ function ProviderRegistration() {
            Phone Number <span className="text-danger">*</span>
          </label>
          <input
-           type="text"
+           type="number"
            id="phoneNumber"
            name="phoneNumber"
-           minLength="10"
-           maxLength="13"
-           value={formData.phoneNumber}
+         
+           value={""+formData.phoneNumber}
            onChange={handleChange}
            className="form-control"
            required
+           min="1111111111"
+  max="9999999999"
+   onInvalid={(e) =>
+    e.target.setCustomValidity("Phone number must of 10 Digit.")
+  }
+  onInput={(e) => e.target.setCustomValidity("")}
+  
          />
        </div>
 
@@ -464,6 +471,12 @@ function ProviderRegistration() {
    onChange={handleChange}
    className="form-control"
    required
+   
+   onInvalid={(e) =>
+     e.target.setCustomValidity("Pincode must of 6 Digit.")
+   }
+   onInput={(e) => e.target.setCustomValidity("")}
+   
  />
 </div>
 <div className="col-md-6">
@@ -509,6 +522,7 @@ function ProviderRegistration() {
      color: "black",
    }}
  >
+  <form  onSubmit={handleSubmit}>
    <h2 className="text-center mb-4" style={{ fontFamily: "'Comic Sans MS', cursive" }}>
      Provider Registration
    </h2>
@@ -599,7 +613,7 @@ function ProviderRegistration() {
        {/* skill */}
        <div className="col-md-12">
          <label className="form-label">
-           Skills 
+           Skills <span className="text-danger">*</span>
          </label>
          <div className="row g-2">
            <div className="col-md-4">
@@ -623,6 +637,7 @@ function ProviderRegistration() {
                onChange={handleChange}
                className="form-control"
                placeholder="skill2"
+               required
              />
            </div>
            <div className="col-md-4">
@@ -634,6 +649,7 @@ function ProviderRegistration() {
                onChange={handleChange}
                className="form-control"
                placeholder="skill3"
+               required
              />
            </div>
          </div>
@@ -641,7 +657,7 @@ function ProviderRegistration() {
        {/*Bio*/}
        <div className="col-md-12">
  <label htmlFor="bio" className="form-label">
-   Bio
+   Bio<span className="text-danger">*</span>
  </label>
  <textarea
    id="bio"
@@ -650,7 +666,14 @@ function ProviderRegistration() {
    onChange={handleChange}
    className="form-control"
    rows="2" 
+   minLength={30}
    maxLength={100}
+   required
+    onInvalid={(e) =>
+     e.target.setCustomValidity("Input bio of minimum 30 characters")
+   }
+   onInput={(e) => e.target.setCustomValidity("")}
+   
    
    placeholder="Write something about yourself..."
  ></textarea>
@@ -659,7 +682,7 @@ function ProviderRegistration() {
        {/* Email */}
        <div className="col-md-6">
          <label htmlFor="languageSpoke" className="form-label">
-         Language Known 
+         Language Known <span className="text-danger">*</span>
          </label>
          <input
            type="text"
@@ -688,7 +711,7 @@ function ProviderRegistration() {
            value={formData.timeOfService}
            onChange={handleChange}
            className="form-control"
-           required
+           
          />
        </div>
 
@@ -778,7 +801,7 @@ function ProviderRegistration() {
        </button>
        </div>
        <div className="col-md-6">
-       <button type="submit" onClick={handleSubmit} className="btn btn-primary w-100 " disabled={handleButtonState} style={{ borderRadius: "10px" }}>
+       <button type="submit" className="btn btn-primary w-100 " disabled={handleButtonState} style={{ borderRadius: "10px" }}>
        {handleButtonState ? "Hang on ! We are almost there.." : "Register"}
        </button>
      
@@ -787,9 +810,10 @@ function ProviderRegistration() {
      </div>
 
      
-   
+     </form>
  </div>
 )}
+  
  </div>
  </>
 

@@ -11,15 +11,15 @@ import { MdEmail } from 'react-icons/md';
     <>
     <NavBar />
     <section className='contact'>
-        <div class="contentt">
+        <div className="contentt">
             <h2>Contact Us</h2>
             <p>Whether you have a query, suggestion or need support feel
                 free to contact us.<br/>We're just a message away!
             </p>
         </div>
-        <div className='containerr'>
+        <div className='containerr1'>
             {/*Left Siide*/}
-            <div className='contactInfo'>
+            <div className=' containner1 '>
                     <div className='box'>
                     <FaLocationDot className='iconn'/>
                         <div className='textt'>
@@ -47,7 +47,7 @@ import { MdEmail } from 'react-icons/md';
                 {/*Right Side*/}
                 <div className='contactForm'>
                     <form>
-                        <h2>Send Message</h2>
+                        <h1>Send Message</h1>
                         <div className='inputBox'>
                             <input type='text' name='' required />
                             <span className='spann'>Full Name</span>
@@ -56,7 +56,7 @@ import { MdEmail } from 'react-icons/md';
                         
                             <input type='email' name='' required  />
                             
-                            <span className='spann'>Email</span>
+                            <span className='spann' >Email</span>
                         </div>
                         <div className='inputBox'>
                             <textarea required  />

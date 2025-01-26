@@ -18,14 +18,14 @@ const Value = () => {
         <div className="paddings innerwidth flexCenter v-container">
             {/*Left Side*/}
             <div className="v-left">
-                <div className="image-container">
+                <div className="image-container1">
                     <img src="./hero2-img.png" alt=''/>
                 </div>
             </div>
             {/* right side */}
             <div className="flexColStart v-right">
                 <span className='blueText'>Our Value</span>
-                <span className='primaryText'>Value We Give You</span>
+                <span className='primaryText1'>Value We Give You</span>
                 <span  className='secondaryText'>Seemless solutions,reliable professionals and<br/> personalised care-
                 because your trust is our priority!</span>
 

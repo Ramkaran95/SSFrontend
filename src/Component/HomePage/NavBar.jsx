@@ -21,13 +21,22 @@ const NavBar = () => {
       </a>
       </div>
         <div className="flexCenter paddings h-menu">
+        <div className="button1">
           <NavLink to="/" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Home</NavLink>
+          </div>
+          <div className="button1">
           <NavLink to="" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Services</NavLink>
+          </div>
+          <div className="button1">
           <NavLink to="/about" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>About</NavLink>
-          <NavLink to="/login" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Login</NavLink>
-          <button  className="button">
+          </div>
+          <div className="button1">
             <NavLink to="/contact" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Contact</NavLink>
-          </button>
+          </div>
+          <div className="button1">
+          <NavLink to="/login" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Login</NavLink>
+          </div>
+         
         </div>
       </div>
     </section>

@@ -10,12 +10,13 @@ import Layout from './Layout.jsx'
 import About from './Component/AboutPage/About.jsx'
 import Login from './Component/LoginPage/Login.jsx'
 import ProviderDashBoard from './Component/Dashboard/ProviderDashboard.jsx'
-import UserDashBoard from './Component/Dashboard/UserDashboard.jsx'
+
 import ForgetPassword from './Component/ForgetPage/ForgetPassword.jsx'
 import Register from './Component/Register/Register.jsx'
 import UserRegistration from './Component/Registration/UserRegistration.jsx'
 import ProviderRegistration from './Component/Registration/ProviderRegistration.jsx'
 import Contact from './Component/ContactPage/Contact.jsx';
+import UserDashBoard from './Component/Dashboard/UserDashBoard.jsx';
 
 
 

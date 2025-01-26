@@ -61,7 +61,7 @@ function Login() {
         
               }
       );
-      navigate(path);
+      navigate(path,{state:{userData:response.data}});
       
    
       /// Handle successful login (e.g., save user details to state or redirect)

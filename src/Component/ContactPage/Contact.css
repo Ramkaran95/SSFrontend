@@ -33,11 +33,21 @@
 }
 .containerr{
     width: 100%;
+    min-width: auto;
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 30px;
 }
+.containerr1 {
+    width: 100%;
+    min-width: 0; /* Allow the width to shrink */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+    flex-wrap: wrap; /* Enable wrapping on smaller screens */
+  }
 .conactInfo{
     width: 50%;
     display: flex;
@@ -75,12 +85,14 @@
 
 }
 .contactForm{
-    width: 40%;
-    padding: 40px;
+    margin-left: 2rem;
+    min-width: auto;
+    max-width: auto;
+    padding: 3rem;
     background: #fff;
 }
-.contactForm>h2{
-    font-size: 30px;
+.contactForm>h1{
+    font-size: 2rem;
     color: #333;
     font-weight: 500;
 }

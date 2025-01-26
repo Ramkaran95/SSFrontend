@@ -6,7 +6,7 @@ import NavBar from "../HomePage/NavBar";
 const About = () => {
   return (
     <>
-    <p><NavBar /></p>
+    <div><NavBar /></div>
     <div className="container-fluid my-5 " >
       {/* Page Header */}
       <header className="text-center mb-5 ">
@@ -171,7 +171,7 @@ const About = () => {
 
       
     </div>
-    <p><FooterSection /></p>
+    <div><FooterSection /></div>
     </>
   );
 };
