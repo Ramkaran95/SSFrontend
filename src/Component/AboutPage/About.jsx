@@ -85,7 +85,7 @@ const About = () => {
           </div>
           <div className="col-md-6 text-center order-md-1">
             <img
-              src="/booking.jpg"
+              src="/booking.jpg" 
               alt="Solution"
               className="img-fluid rounded shadow-sm"
             />
