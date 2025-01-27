@@ -8,14 +8,21 @@ import SearchItem from './SearchItem/SearchItem';
 import { Row } from 'react-bootstrap';
 import PersonalInfo from '../Update/PersonalInfo';
 import HomeUI from './SearchItem/HomeUI';
+import { useNavigate } from 'react-router-dom';
 function UserDashBoard() {
+    const navigate = useNavigate();
+   
    
   const [valuee,setValuee]=useState(new Date())
   const [value,setValue]=useState('')
  const location = useLocation();
  const data=location.state?.userData;
+ console.log(data.firstName);
+if (!data.firstName) return<div><h1>UnAuthorized ACCESS ..</h1></div>
  
-  const options = [
+
+
+ const options = [
       {label:"Delhi",value:1},
       {label:"Mumbai",value:2},
       {label:"Bengaluru",value:3},
@@ -68,12 +75,13 @@ function UserDashBoard() {
       {label:"Security Guard"}
       
     ];
-    
+       
+  
 
   return (
     <div>
         
-   <p>{data.firstName}</p>
+   {/* <p>{data.firstName}</p> */}
     {/*SEARCH SECTION*/}
     <div className="containner">
         <Row >

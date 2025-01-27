@@ -41,7 +41,7 @@ const About = () => {
       </section>
 
       {/* Problem-Solution Section */}
-      <section className="mb-5">
+      <section className="mb-5 ">
         <h2 className="text-secondary text-center mb-4">How We Solve Problems</h2>
         <div className="row">
           <div className="container col-md-5">

@@ -13,7 +13,7 @@
   }
   
   .title1 {
-    font-size: 3rem;
+    font-size: 2rem;
     margin-top: 1rem ;
 
     font-weight: bold;
@@ -77,9 +77,10 @@
   
   .grid1 {
 
-    border: 1px solid rgb(236, 188, 188);
-    background: rgb(227,210,93);
-background: linear-gradient(335deg, rgba(227,210,93,1) 39%, rgba(227,210,93,1) 42%, rgba(227,210,93,1) 44%, rgba(201,193,132,1) 81%, rgba(227,210,93,1) 100%);    display: grid;
+    border: 1px solid rgba(109, 106, 106, 0.651);
+    /* background: rgb(227,210,93); */
+/* background: linear-gradient(335deg, rgba(227,210,93,1) 39%, rgba(227,210,93,1) 42%, rgba(227,210,93,1) 44%, rgba(201,193,132,1) 81%, rgba(227,210,93,1) 100%);    */
+ display: grid;
     align-items:center;
     justify-content: center;
     grid-template-columns: repeat(7, 1fr);
@@ -95,24 +96,30 @@ background: linear-gradient(335deg, rgba(227,210,93,1) 39%, rgba(227,210,93,1) 4
     background-size: cover;
     background-position: center;
     border-radius: 5px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 3px rgba(146, 145, 145, 0.555);
     display: flex;
     align-items: end;
     justify-content: center;
-   
+   color: #0057b300;
     
     transition: all 0.3s ease-in-out;
     overflow: hidden; /* Ensures images don't overflow the box */
+    #p1{
+      background-color: #147ae700;
+     }
     
 }
-.box1 > li{
-   
-  
-   width: 100%;
-  
-    background: rgba(0, 0, 0, 0.836); /* Optional background for better visibility */
-    color: white;
-   
+.box1:hover{
+   color:black;
+   font-size: 60%;
+   font-weight:bolder;
+   font-stretch:ultra-expanded;
+   #p1{
+    background-color: #ffffffb0;
+    border-radius: 1rem;
+   }
+
+
 }
 .button11p {
     border: none;

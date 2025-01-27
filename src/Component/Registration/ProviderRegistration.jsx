@@ -5,6 +5,12 @@ import { ToastContainer ,toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import NavBar from "../HomePage/NavBar";
 import Spinner from '../../Spinner';
+
+
+import { useLoadScript, Autocomplete } from "@react-google-maps/api";
+
+const libraries = ["places"]; // Required for Autocomplete
+
 function ProviderRegistration() {
   const [value,setValue]=useState('')
   const options = [
@@ -256,6 +262,61 @@ function ProviderRegistration() {
        }
   };
 
+
+  
+  // const [inputValue, setInputValue] = useState("");
+  // const [address, setAddress] = useState({});
+  const { isLoaded, loadError } = useLoadScript({
+    googleMapsApiKey: "AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk", // Replace with your API Key
+    libraries,
+  });
+  const handlePlaceChanged = (autocomplete) => {
+    if (!autocomplete) return;
+    const input = document.getElementById("area").value;
+   
+    const place = autocomplete.getPlace();
+    if (!place || !place.address_components) {
+      console.error("No address components found for the selected place.");
+      return;
+    }
+    const addressComponents = {};
+    place.address_components.forEach((component) => {
+      const types = component.types;
+      if (types.includes("locality")) {
+        
+        setformData((prevState) => ({ ...prevState, city: component.long_name }));
+      } else if (types.includes("administrative_area_level_1")) {
+        
+        setformData((prevState) => ({ ...prevState, state: component.long_name }));
+      } else if (types.includes("administrative_area_level_3")) {
+        
+        setformData((prevState) => ({
+          ...prevState,
+          district: component.long_name,
+        }));
+      } else if (types.includes("postal_code")) {
+       
+        const pinCode = parseInt(component.long_name, 10);
+          if (!isNaN(pinCode)) {
+          setformData((prevState) => ({
+           ...prevState,
+            pinCode,
+           }));
+}
+        
+      }
+    });  
+    // Set area based on the input value
+    setformData((prevState) => ({ ...prevState, area: input }));
+    console.log("Place details:", place);
+   
+    console.log(formData);
+  };
+  if (loadError) return <div>Error loading Google Maps</div>;
+  
+  if (!isLoaded) return <div>Loading...</div>;
+
+
   return (
 <>
 <div className="d-flex justify-content-center align-items-center vh-150" style={{paddingTop: "10px" , paddingBottom:"10px"}}>
@@ -416,15 +477,28 @@ function ProviderRegistration() {
  <label htmlFor="area" className="form-label">
    Area 
  </label>
- <input
-   type="text"
-   id="area"
-   name="area"
-   value={formData.area}
-   onChange={handleChange}
-   className="form-control"
-   
- />
+{/* <input
+    type="text"
+    id="area"
+    name="area"
+    value={formData.area}
+    onChange={handleChange}
+    className="form-control"
+    
+  /> */}
+  <Autocomplete
+        onLoad={(autocomplete) => (window.autocomplete = autocomplete)} // Keep reference
+        onPlaceChanged={() => handlePlaceChanged(window.autocomplete)}
+      >
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Search for a place..."
+          id ="area"
+            />
+      </Autocomplete>
+
+
 </div>
 
 <div className="col-md-6">

@@ -76,7 +76,7 @@ import PlaceAutocomplete from '../../PlaceAutocomplete';
             </div>
     </section>
     {/* <PlaceApi/> */}
-    <PlaceAutocomplete/>
+   
     <FooterSection/>
     </>
   );
