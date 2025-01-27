@@ -5,6 +5,9 @@ import FooterSection from '../HomePage/FooterSection';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
+import PlaceApi from '../../placeApi';
+
+import PlaceAutocomplete from '../../PlaceAutocomplete';
 
  const Contact = () => {
   return (
@@ -72,6 +75,8 @@ import { MdEmail } from 'react-icons/md';
             
             </div>
     </section>
+    {/* <PlaceApi/> */}
+    <PlaceAutocomplete/>
     <FooterSection/>
     </>
   );

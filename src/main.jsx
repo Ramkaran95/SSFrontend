@@ -17,6 +17,7 @@ import UserRegistration from './Component/Registration/UserRegistration.jsx'
 import ProviderRegistration from './Component/Registration/ProviderRegistration.jsx'
 import Contact from './Component/ContactPage/Contact.jsx';
 import UserDashBoard from './Component/Dashboard/UserDashBoard.jsx';
+import PersonalInfo from './Component/Update/PersonalInfo.jsx';
 
 
 
@@ -35,7 +36,9 @@ const router = createBrowserRouter(
     <Route path="/register/userRegistration" element={<UserRegistration/>}/>
     <Route path="/register/providerRegistration" element={<ProviderRegistration/>}/>
     <Route path="/contact" element={<Contact/>}/>
+    <Route path="/personalInfo" element={<PersonalInfo/>}/>
    
+    
     
    
 

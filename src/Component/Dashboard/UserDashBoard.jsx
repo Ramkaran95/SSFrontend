@@ -5,12 +5,16 @@ import TimePicker from 'react-time-picker';
 import NavBar from '../HomePage/NavBar';
 import FooterSection from '../HomePage/FooterSection';
 import SearchItem from './SearchItem/SearchItem';
+import { Row } from 'react-bootstrap';
 import PersonalInfo from '../Update/PersonalInfo';
+import HomeUI from './SearchItem/HomeUI';
 function UserDashBoard() {
    
   const [valuee,setValuee]=useState(new Date())
   const [value,setValue]=useState('')
-
+ const location = useLocation();
+ const data=location.state?.userData;
+ 
   const options = [
       {label:"Delhi",value:1},
       {label:"Mumbai",value:2},
@@ -68,11 +72,16 @@ function UserDashBoard() {
 
   return (
     <div>
-        <PersonalInfo/>
-    <NavBar/>
+        
+   <p>{data.firstName}</p>
     {/*SEARCH SECTION*/}
-    <div className="listContainer">
-        <div className="listWrapper">
+    <div className="containner">
+        <Row >
+            <HomeUI userData={data}/>
+                </Row> 
+
+
+        {/* <div className="listWrapper">
             <div className="listSearch">
                 <h1 className="lsTitle">Search</h1>
                 <div className='lsItem'>
@@ -98,19 +107,17 @@ function UserDashBoard() {
             </div>
             
             </div>
-                <div className="listResult">
+              
+            </div> */}
+         
+        <Row >
+            <div className="listResult">
                   <SearchItem />
-                  <SearchItem />
-                  <SearchItem />
-                  <SearchItem />
-                  <SearchItem />
-                  <SearchItem />
-                  <SearchItem />
-                  <SearchItem />
+                 
                 </div>
-            </div>
-        </div>
-    <FooterSection />
+                </Row>
+    </div>
+   
     </div>
 )
 

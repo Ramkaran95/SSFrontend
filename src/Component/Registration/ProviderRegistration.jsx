@@ -149,6 +149,7 @@ function ProviderRegistration() {
   "Construction Laborer",
   "Pest Control Technician",
   "Security Guard",
+  "Maid"
     
   ];
   

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Container } from 'react-bootstrap';
 import './PersonalInfo.css';
 import {useLocation } from "react-router-dom";
 import axios from 'axios';
@@ -9,6 +9,8 @@ function PersonalInfo() {
     const location = useLocation();
     const userData= location.state?.userData;
      const userId= userData.userId;
+     const [HandleOption, setOption] = useState(1);
+
     const [userDetails, setUserDetails] = useState({
        
         userName: userData.userName,
@@ -24,6 +26,7 @@ function PersonalInfo() {
         pinCode: userData.pinCode,
         city: userData.city
     });
+    
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -70,33 +73,142 @@ function PersonalInfo() {
         }
     };
 
+    // Change password 
+const [handlePassword ,setPassword]= useState({
+     existingPassword : "",
+     newPassword :"",
+     confirmPassword : ""
+
+});
+
+   
+const handlePasswordChange = (e) =>
+    setPassword({ ...handlePassword, [e.target.name]: e.target.value });
+
+const changePassword = async (e) => {
+    e.preventDefault();
+    if (handlePassword.newPassword !== handlePassword.confirmPassword) {
+     toast.info(
+       "Password not match.!",
+        {
+         
+        }
+      );
+      return;
+    }
+    try {
+        
+        const apidata= {
+        existingPassword : handlePassword.existingPassword,
+         newPassword : handlePassword.newPassword
+    
+    };  console.log(apidata,userId);
+
+    
+
+    const response = await axios.put("http://localhost:5252/api/User/changePassword?id="+userId, apidata, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        alert(data.Message);
+    } 
+      toast.success(
+        `${response?.data.message || "Password Change Successfully..!"
+        }  `,
+        {
+          
+          
+        
+        }
+      );
+
+
+     }
+   
+    catch(error){
+        
+        toast.error(
+            `${ 
+              error.response?.data?.message || "Failed..!"
+            }`,
+            {
+             
+            }
+          );
+    }
+
+
+}
+
+
     return (
         <div className="container-fluid">
-            <div className="row">
+            <Row>
+            
                 {/* Sidebar */}
-                <div className="col-md-3">
-                    <div className="py-4">
-                        <ul className="nav flex-column">
-                            <li className="nav-item mb-2">
-                                <button className="btn btn-primary">Personal Info</button>
-                            </li>
-                            <li className="nav-item mb-2">
-                                <button className="btn btn-light">Bookings</button>
-                            </li>
-                            <li className="nav-item mb-2">
-                                <button className="btn btn-light">Change Password</button>
-                            </li>
-                            <li className="nav-item mb-2">
-                                <button className="btn btn-light">Delete Account</button>
-                            </li>
-                            <li className="nav-item">
-                                <button className="btn btn-light">Logout</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
+                <div className="col-md-3 h-100 d-flex flex-column">
+  <div className="py-4 flex-grow-1 d-flex flex-column">
+    <ul className="nav flex-column bg-light p-3 rounded shadow-sm h-100">
+      <li className="nav-item mb-3">
+        <button
+          className="btn btn-secondary w-100 text-start py-2 rounded-pill"
+          onClick={() => setOption(1)}
+        >
+          Personal Info
+        </button>
+      </li>
+      <li className="nav-item mb-3">
+        <button
+          className="btn btn-secondary w-100 text-start py-2 rounded-pill"
+          onClick={() => setOption(2)}
+        >
+          Bookings
+        </button>
+      </li>
+      <li className="nav-item mb-3">
+        <button
+          className="btn btn-secondary w-100 text-start py-2 rounded-pill"
+          onClick={() => setOption(3)}
+        >
+          Change Password
+        </button>
+      </li>
+      <li className="nav-item mb-3">
+        <button
+          className="btn btn-secondary w-100 text-start py-2 rounded-pill"
+          onClick={() => setOption(4)}
+        >
+          Delete Account
+        </button>
+      </li>
+      <li className="nav-item">
+        <button className="btn btn-secondary w-100 text-start py-2 rounded-pill">
+          Logout
+        </button>
+      </li>
+    </ul>
+    <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br>
+                <br></br><br></br>
+                <br></br>
+                <br></br>
+                
+               
+                
+  </div>
+</div>
                 {/* Content Area */}
+                {HandleOption==1 && (
                 <div className="col-md-9">
                     <div className="p-4">
                         <h3>Update Personal Information</h3>
@@ -272,8 +384,78 @@ function PersonalInfo() {
                             <button type="submit" className="btn btn-success m-2">Update</button>
                         </form>
                     </div>
-                </div>
-            </div>
+                </div>)}
+
+                {/* For Booking */}
+                {HandleOption==2 && (
+                    <div className="containner">Account</div>
+                   )}
+                {/* For ChangePassword */}
+                {HandleOption==3 && (
+                     <div className="col-md-9">
+                     <div className="p-4">
+                         <h3>Change Password</h3>
+                         <form onSubmit={changePassword}>
+                             
+                         
+                             
+                            
+                                 <Row>
+
+                                     <div className="inputBox1">
+                                         <input
+                                             type="text"
+                                             id="existingPassword"
+                                             name="existingPassword"
+                                             value={handlePassword.existingPassword}
+                                             onChange={handlePasswordChange}
+                                             required
+                                         />
+                                         <span className="spann"> Existing Password</span>
+                                     </div>
+                                 </Row>
+                                 <Row>
+                                     <div className="inputBox1">
+                                         <input
+                                         required
+                                             type="text"
+                                             id="newPassword"
+                                             name="newPassword"
+                                             value={handlePassword.newPassword}
+                                             onChange={handlePasswordChange}
+                                         />
+                                         <span className="spann"> New Password</span>
+                                     </div>
+                                 </Row>
+                                 <Row>
+                                     <div className="inputBox1">
+                                         <input
+                                         required
+                                             type="text"
+                                             id="confirmPassword"
+                                             name="confirmPassword"
+                                             value={handlePassword.confirmPassword}
+                                             onChange={handlePasswordChange}
+                                         />
+                                         <span className="spann"> Confirm Password</span>
+                                     </div>
+                                 </Row>
+                             
+                            
+                           
+ 
+                             <hr></hr>
+                             <button type="submit" className="btn btn-success m-2">Change</button>
+                         </form>
+                     </div>
+                 </div>)}
+                {/* For Delete Account */}
+                {HandleOption==4 && (
+                    <div className="containner">Account</div>
+                )}
+               
+
+            </Row>
         </div>
     );
 }

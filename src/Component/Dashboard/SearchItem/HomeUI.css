@@ -1,0 +1,132 @@
+/* General Container */
+
+  
+  /* Header Section */
+  .header1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .title1 {
+    font-size: 3rem;
+    margin-top: 1rem ;
+
+    font-weight: bold;
+    color:rgb(42, 46, 46);
+  }
+  
+  .subtitle1 {
+    color: #6c757d;
+    margin-top: 2rem ;
+    margin-bottom: 0 ;
+    text-align: left;
+    
+  }
+  
+  .location1 {
+    color: #adb5bd;
+   
+    text-align: left;
+
+  }
+  
+  .profile-icon1 {
+    width: 75px;
+    height: 75px;
+    background-color: #dee2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 24px;
+  }
+  
+  /* Search Bar */
+ 
+  
+  .button11 {
+    flex: 1;
+    margin: 0 5px;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #e9ecef;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button11:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .search-button11 {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .search-button11:hover {
+    background-color: #0056b3;
+  }
+  
+  .grid1 {
+
+    border: 1px solid rgb(236, 188, 188);
+    background: rgb(227,210,93);
+background: linear-gradient(335deg, rgba(227,210,93,1) 39%, rgba(227,210,93,1) 42%, rgba(227,210,93,1) 44%, rgba(201,193,132,1) 81%, rgba(227,210,93,1) 100%);    display: grid;
+    align-items:center;
+    justify-content: center;
+    grid-template-columns: repeat(7, 1fr);
+    gap:1px  0.1px 20px;
+}
+
+.box1 {
+    margin: 0.5rem;
+    
+    aspect-ratio: 1/1; /* Ensures the box is a perfect square */
+    max-width: 80%;
+    /* background-image: url('C:/FinalYearProject/SSFrontend/public/beautrician.png'); */
+    background-size: cover;
+    background-position: center;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: end;
+    justify-content: center;
+   
+    
+    transition: all 0.3s ease-in-out;
+    overflow: hidden; /* Ensures images don't overflow the box */
+    
+}
+.box1 > li{
+   
+  
+   width: 100%;
+  
+    background: rgba(0, 0, 0, 0.836); /* Optional background for better visibility */
+    color: white;
+   
+}
+.button11p {
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    outline: none; /* Removes the default focus outline */
+}
+
+.button11p.selected {
+    border: 6px solid rgb(5, 5, 5); /* Border appears when selected */
+    transform: scale(1.1); /* Optional scaling effect */
+}
+
+.button11p:hover {
+    transform: scale(1.05); /* Slight hover effect */
+}
