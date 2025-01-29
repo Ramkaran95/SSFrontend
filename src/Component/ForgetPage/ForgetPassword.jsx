@@ -35,8 +35,8 @@ const ForgotPassword = () => {
   const handleOtpChange = (e) => setOtp(e.target.value);
   const handlePasswordChange = (e) =>
     setPasswords({ ...passwords, [e.target.name]: e.target.value });
-  
   const sendOtp = async (e) => {
+    
     e.preventDefault();
     sethandleButtonState(true);
     setSpinnerState(true);
@@ -82,7 +82,7 @@ const ForgotPassword = () => {
        "Password not match.!",
         {
          
-        }
+        } 
       );
       return;
     }

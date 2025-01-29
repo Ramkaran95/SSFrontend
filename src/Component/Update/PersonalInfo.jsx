@@ -4,8 +4,13 @@ import './PersonalInfo.css';
 import {useLocation } from "react-router-dom";
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import Spinner from "../../Spinner";
+
 
 function PersonalInfo() {
+    const [handleSpinnerState ,setSpinnerState]=useState(false);
+    
+
     const location = useLocation();
     const userData= location.state?.userData;
      const userId= userData.userId;
@@ -35,6 +40,7 @@ function PersonalInfo() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSpinnerState(true);
         try {
             console.log("ID", typeof userDetails.userId,userDetails.userId);   
             console.log("ID", typeof userDetails ,userDetails);   
@@ -49,28 +55,38 @@ function PersonalInfo() {
 
             if (response.ok) {
                 const data = await response.json();
-                alert(data.Message);
+              
             } else {
-                alert("Error updating user details.");
-            }
-        } catch (error) {
-            alert(error.Message);
-            console.error("Error: ",  JSON.stringify(error.data, null, 2));
+                toast.success(
+                    `${response?.data.message || "Password Change Successfully..!"
+                    }  `,
+                    {
+                      
+               
+            });
+        }} catch (error) {
+           
+            console.error("Error: ",  JSON.stringify(error, null, 2));
             console.error("Error: ",  JSON.stringify(userDetails, null, 2));
-            
+    //         alert(`-${
+    //     JSON.stringify(error, null, 2) || "Error"
+    //   }`)
             toast.error(
-                `Registration Response: ${ 
+                `Update Response: ${ 
                   error.response?.data?.status || "Something went wrong!"
                 }  -${
                   error.response?.data.title || "User already exist with same username or email..!"
-                } - ${"Check: "+
-                  Object.keys(error.response?.data.errors || {}).join(", ")
                 } `,
                 {
                   
                 }
               );
         }
+        finally{
+
+            setSpinnerState(false);
+      
+          }
     };
 
     // Change password 
@@ -87,6 +103,7 @@ const handlePasswordChange = (e) =>
 
 const changePassword = async (e) => {
     e.preventDefault();
+    setSpinnerState(true);
     if (handlePassword.newPassword !== handlePassword.confirmPassword) {
      toast.info(
        "Password not match.!",
@@ -129,23 +146,32 @@ const changePassword = async (e) => {
      }
    
     catch(error){
-        
+        // alert(`-${
+        //     JSON.stringify(error, null, 2) || "Error"
+        //   }`)
         toast.error(
             `${ 
-              error.response?.data?.message || "Failed..!"
+              error?.message || "Failed..!"
+             
             }`,
             {
              
             }
           );
     }
+    finally{
+
+        setSpinnerState(false);
+  
+      }
 
 
 }
 
 
     return (
-        <div className="container-fluid">
+        <div className="container-fluid1">
+             <Spinner visible={handleSpinnerState}/>
             <Row>
             
                 {/* Sidebar */}
@@ -185,7 +211,9 @@ const changePassword = async (e) => {
         </button>
       </li>
       <li className="nav-item">
-        <button className="btn btn-secondary w-100 text-start py-2 rounded-pill">
+        <button className="btn btn-secondary w-100 text-start py-2 rounded-pill"
+        onClick={() => setOption(5)}
+        >
           Logout
         </button>
       </li>
@@ -279,11 +307,19 @@ const changePassword = async (e) => {
                                     <div className="inputBox1">
                                         <input
                                         required
-                                            type="text"
+                                            type="number"
                                             id="phoneNumber"
                                             name="phoneNumber"
+                                            m
                                            value={userDetails.phoneNumber}
                                             onChange={handleChange}
+                                            min="1111111111"
+                                             max="9999999999"
+                                            onInvalid={(e) =>
+                                            e.target.setCustomValidity("Phone number must of 10 Digit.")
+                                            }
+                                             onInput={(e) => e.target.setCustomValidity("")}
+  
                                         />
                                         <span className="spann"> Number </span>
                                     </div>
@@ -359,6 +395,13 @@ const changePassword = async (e) => {
                                             name="pinCode"
                                            value={userDetails.pinCode}
                                             onChange={handleChange}
+                                            min="111111"
+                                            max="999999"
+                                           onInvalid={(e) =>
+                                           e.target.setCustomValidity("Pincode must of 6 Digit.")
+                                           }
+                                            onInput={(e) => e.target.setCustomValidity("")}
+ 
                                         />
                                         <span className="spann"> Pincode </span>
                                     </div>
@@ -388,11 +431,16 @@ const changePassword = async (e) => {
 
                 {/* For Booking */}
                 {HandleOption==2 && (
-                    <div className="containner">Account</div>
+                    <div className="col-md-9">
+                    <div className="p-4">
+                        <h3>Booking Under Construction </h3>
+                        </div>
+                    </div>
                    )}
                 {/* For ChangePassword */}
                 {HandleOption==3 && (
                      <div className="col-md-9">
+                       
                      <div className="p-4">
                          <h3>Change Password</h3>
                          <form onSubmit={changePassword}>
@@ -404,12 +452,16 @@ const changePassword = async (e) => {
 
                                      <div className="inputBox1">
                                          <input
-                                             type="text"
+                                             type="password"
                                              id="existingPassword"
                                              name="existingPassword"
+                                             required
                                              value={handlePassword.existingPassword}
                                              onChange={handlePasswordChange}
-                                             required
+                                             minLength="8"
+                                             maxLength="20"
+                                          
+                                             
                                          />
                                          <span className="spann"> Existing Password</span>
                                      </div>
@@ -418,9 +470,11 @@ const changePassword = async (e) => {
                                      <div className="inputBox1">
                                          <input
                                          required
-                                             type="text"
+                                             type="password"
                                              id="newPassword"
                                              name="newPassword"
+                                               minLength="8"
+                                             maxLength="20"
                                              value={handlePassword.newPassword}
                                              onChange={handlePasswordChange}
                                          />
@@ -431,9 +485,11 @@ const changePassword = async (e) => {
                                      <div className="inputBox1">
                                          <input
                                          required
-                                             type="text"
+                                             type="password"
                                              id="confirmPassword"
                                              name="confirmPassword"
+                                              minLength="8"
+                                             maxLength="20"
                                              value={handlePassword.confirmPassword}
                                              onChange={handlePasswordChange}
                                          />
@@ -451,7 +507,19 @@ const changePassword = async (e) => {
                  </div>)}
                 {/* For Delete Account */}
                 {HandleOption==4 && (
-                    <div className="containner">Account</div>
+                   <div className="col-md-9">
+                   <div className="p-4">
+                       <h3>Delete Underconstruction </h3>
+                       </div>
+                   </div>
+                )}
+
+{HandleOption==5 && (
+                     <div className="col-md-9">
+                     <div className="p-4">
+                         <h3>Logout Underconstruction </h3>
+                         </div>
+                     </div>
                 )}
                
 
