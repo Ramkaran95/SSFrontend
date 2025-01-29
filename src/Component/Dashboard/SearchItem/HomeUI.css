@@ -93,7 +93,7 @@
     margin: 0.5rem;
     
     aspect-ratio: 1/1; /* Ensures the box is a perfect square */
-    max-width: 80%;
+    max-width: 100%;
     /* background-image: url('C:/FinalYearProject/SSFrontend/public/beautrician.png'); */
     background-size: cover;
     background-position: center;
@@ -113,9 +113,8 @@
 }
 .box1:hover{
    color:black;
-   font-size: 60%;
-   font-weight:bolder;
-   font-stretch:ultra-expanded;
+   
+   
    #p1{
     background-color: #ffffffb0;
     border-radius: 1rem;
