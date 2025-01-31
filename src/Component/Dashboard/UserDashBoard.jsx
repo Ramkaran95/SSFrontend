@@ -11,31 +11,50 @@ import { toast } from "react-toastify";
 import { useLocation } from 'react-router-dom'; 
 import { useLoadScript, Autocomplete } from "@react-google-maps/api";
 import SearchItem from './SearchItem/SearchItem';
+import UnAuth from "../../Features/UnAuth";
 const libraries = ["places"]; // Required for Autocomplete
 
 
 const UserDashBoard= () => {
     const location = useLocation();
  const userData=location.state?.userData;
- if (!userData) return<div><h1>UnAuthorized ACCESS ..</h1></div>
+ if (!userData) return<div><UnAuth/></div>
  
  
  
-    const photos = [
-        { url: '/Provider/makeup-artist.png', name: 'Beautician' },
-        { url: '/Provider/plumber.png', name: 'Plumber' },
-        { url: '/Provider/electrician.png', name: 'Electrician' },
-        { url: '/Provider/carpenter.png', name: 'Carpenter' },
-        { url: '/Provider/maid.png', name: 'Maid' },
-        { url: '/Provider/painter.png', name: 'Painter' },
-        { url: '/Provider/mechanic.png', name: 'Mechanic' },
-        { url: '/Provider/technician.png', name: 'technician' },
-        { url: '/Provider/welder.png', name: 'Welder' },
-        { url: '/beautrician.png', name: 'Beautician' },
-        { url: '/plumber.png', name: 'Plumber' },
-        { url: '/electrician.png', name: 'Electrician' },
-        { url: '/beautrician.png', name: 'Beautician' }  ,
-        { url: '/plumber.png', name: 'Security Guard' } ];
+    // const photos = [
+    //     { url: '/Provider/makeup-artist.png', name: 'Beautician' },
+    //     { url: '/Provider/plumber.png', name: 'Plumber' },
+    //     { url: '/Provider/electrician.png', name: 'Electrician' },
+    //     { url: '/Provider/carpenter.png', name: 'Carpenter' },
+    //     { url: '/Provider/maid.png', name: 'Maid' },
+    //     { url: '/Provider/painter.png', name: 'Painter' },
+    //     { url: '/Provider/mechanic.png', name: 'Mechanic' },
+    //     { url: '/Provider/technician.png', name: 'technician' },
+    //     { url: '/Provider/welder.png', name: 'Welder' },
+    //     { url: '/beautrician.png', name: 'Beautician' },
+    //     { url: '/plumber.png', name: 'Plumber' },
+    //     { url: '/electrician.png', name: 'Electrician' },
+    //     { url: '/beautrician.png', name: 'Beautician' }  ,
+    //     { url: '/plumber.png', name: 'Security Guard' } ];
+        const photos = [
+          { url: '/Provider/makeup-artist.png', name: 'Beautician' },
+          { url: '/Provider/plumber.png', name: 'Plumber' },
+          { url: '/Provider/electrician.png', name: 'Electrician' },
+          { url: '/Provider/carpenter.png', name: 'Carpenter' },
+          { url: '/Provider/maid.png', name: 'Maid' },
+          { url: '/Provider/painter.png', name: 'Painter' },
+          { url: '/Provider/mechanic.png', name: 'Mechanic' },
+          { url: '/Provider/technician.png', name: 'Technician' }, // Fixed capitalization
+          { url: '/Provider/welder.png', name: 'Welder' },
+          { url: '/Provider/customs-agent.png', name: 'Security Guard' }, 
+          {url: '/Provider/service.png', name: 'AC Technician' },
+          { url: '/Provider/taxi-driver.png', name: 'Driver' },
+         // Corrected image for Security Guard
+      ];
+      
+
+
         const professionList = [
             "Electrician",
             "Plumber",
@@ -61,7 +80,7 @@ const UserDashBoard= () => {
           const navigate = useNavigate()
           function nav (){
             console.log(userData,{userData});
-            navigate("/personalInfo",{state:{userData}});
+            navigate("/userDashboard/personalInfo",{state:{userData}});
 
 
           }
@@ -127,7 +146,7 @@ const UserDashBoard= () => {
               [e.target.name]: e.target.value,
             });
           };
-          const [providerResponse, setProviderResponse]=useState();
+          const [providerResponse, setProviderResponse]=useState([]);
           const handleProviderSearch = async (e) => {
             e.preventDefault();
             
@@ -243,7 +262,7 @@ const UserDashBoard= () => {
  
     <div className="container-fluid" >
       {/* Header */}
-     <p>{userData.firstName+ providerFilter.pincode +JSON.stringify(providerResponse, null, 2)}</p>
+     {/* <p>{userData.firstName+ providerFilter.pincode +JSON.stringify(providerResponse, null, 2)}</p> */}
       <div className="header1">
     <div>
       <h1 className="title1">ServiceSeeker</h1>
@@ -273,10 +292,10 @@ const UserDashBoard= () => {
     <br></br>
       {/* Search Bar */}
        
-        <div className="container ">
-      <div className="container ">
+        <div className="container w-100">
+      <div className="container  ">
       <form onSubmit={handleProviderSearch}>
-      <div className="d-flex  justify-content-around align-item-center">
+      <div className="d-flex  justify-content-between align-item-center">
      {/* <input
           type="text"
           className="form-control "
@@ -322,203 +341,40 @@ const UserDashBoard= () => {
     </div>
     </div>
   
-
+   {/* Providers image serach section */}
     <div className="container">
     <div className="containner m-3">
     <div className=" d-flex  justify-content-center align-item-center">
-       
-      {/* <div className="grid1">
-      {photos.map((item, index) => (
-        <button
-          key={index}
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={handleProviderFilter}
-          style={{ backgroundImage: `url(${item.url})`}}
-         > <p id="p1">{item.name}{index}</p>
-        </button>
-        ))}
-      </div> */}
-      <form >
-      <div className="grid1">
+    
+      <form>
+  <div className="grid1">
+    {photos.map((photo, index) => (
       <button
-        
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[0 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[0].url})`}}
-         > <p id="p1">{photos[0].name} </p>
-        </button>
-        <button
-       
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[1 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[1].url})`}}
-         > <p id="p1">{photos[1 ].name}</p>
-        </button>
-        <button
-      
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[2].name)}
-          
-          style={{ backgroundImage: `url(${photos[2].url})`}}
-         > <p id="p1">{photos[2 ].name}</p>
-        </button>
-        <button
-       
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[3 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[3].url})`}}
-         > <p id="p1">{photos[3 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[4 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[4].url})`}}
-         > <p id="p1">{photos[4 ].name}</p>
-        </button>
-        <button
-        
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[5 ].name)}
-          style={{ backgroundImage: `url(${photos[5].url})`}}
-         > <p id="p1">{photos[5 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[6 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[6].url})`}}
-         > <p id="p1">{photos[6 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[7].name)}
-          
-          style={{ backgroundImage: `url(${photos[7].url})`}}
-         > <p id="p1">{photos[7 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[8 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[8].url})`}}
-         > <p id="p1">{photos[8 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[9 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[9].url})`}}
-         > <p id="p1">{photos[9 ].name}</p>
-        </button>
-        <button
-        
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[10 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[10].url})`}}
-         > <p id="p1">{photos[10 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[11 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[11].url})`}}
-         > <p id="p1">{photos[11 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[12 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[12].url})`}}
-         > <p id="p1">{photos[12 ].name}</p>
-        </button>
-        <button
-         
-          type="submit"
-          className="box1 btn button11p"
-          id="prosession2"
-          name="procession2"
-          value={"providerFilter.profession"}
-          onClick={(e)=> handleProviderSearch1(e,userData.city,userData.pinCode,userData.district,photos[13 ].name)}
-          
-          style={{ backgroundImage: `url(${photos[13].url})`}}
-         > <p id="p1">{photos[13 ].name}</p>
-        </button>
-        </div>
-        </form>
+        key={index}
+        type="submit"
+        className="box1 btn button11p"
+        id={`prosession${index}`} 
+        name="procession"
+        value={photo.name}
+        onClick={(e) => handleProviderSearch1(e, userData.city, userData.pinCode, userData.district, photo.name)}
+        style={{ backgroundImage: `url(${photo.url})` }}
+      >
+        <p id="p1">{photo.name}</p>
+      </button>
+    ))}
+  </div>
+</form>
+
       </div>
       </div>
       </div>
  </div>
  <div className="listResult">
-    <SearchItem />
+ {providerResponse.map((presponse, index) => (
+     
+    <SearchItem key={index} ProviderData={presponse} UserData={userData}/>
+
+ ))}
     <p>{providerFilter.city}</p>
     <p>{providerFilter.pincode}</p>
     <p>{providerFilter.profession}</p>

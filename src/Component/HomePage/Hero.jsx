@@ -17,7 +17,8 @@ function Hero() {
 
         <div className='flexColStart hero-left'>
           <div className='hero-title'>
-            <div className='blue-circle'/>
+            <div className="blue-circle2"></div>
+            <div className='blue-circle '/>
             <h1>
               Now Get Services<br/>
               At Your Doorstep!
@@ -30,11 +31,15 @@ function Hero() {
           <span>We have got the right professionals ready for you.</span>
           <span>Start your search now!</span>
         </div>
+       
+
         <div className=' search-bar'>
+    
+
           <FaSearch display='inline-block' color='aqua' size={25}/>
           <input type='text' placeholder='Find Experts eg:- painter,carpenter,plumber,etc'
           onChange={e=>setLocation(e.target.value)}/>
-          <button className="button" onClick={handleSearch}>Search</button>
+          <button className="button1" onClick={handleSearch}>Search</button>
 
         </div>
         </div>

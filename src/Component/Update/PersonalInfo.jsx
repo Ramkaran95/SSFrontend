@@ -1,36 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
 import './PersonalInfo.css';
-import {useLocation } from "react-router-dom";
+import {Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import Spinner from "../../Spinner";
+import UnAuth from '../../Features/UnAuth';
 
 
 function PersonalInfo() {
-    const [handleSpinnerState ,setSpinnerState]=useState(false);
+    const navigate= useNavigate();
+    const [handleSpinnerState ,setSpinnerState] = useState(false);
     
 
     const location = useLocation();
     const userData= location.state?.userData;
-     const userId= userData.userId;
+     const [userId,setUserId]= useState(userData.userId);
      const [HandleOption, setOption] = useState(1);
-
+     const [state ,setState]=useState(true);
+     
+   
+ 
+   
     const [userDetails, setUserDetails] = useState({
+        userName:'',
+        firstName: '',
+        lastName:  '',
+        middleName: '',
+        phoneNumber:  '',
+        email: '',
+        area:  '',
+        state: '',
+        district:  '',
+        pinCode: '',
+        city:  ''
+      });
+   
+      useEffect(() => {
        
-        userName: userData.userName,
-
-        firstName: userData.firstName,
-        lastName: userData.lastName,
-        middleName: userData.middleName,
-        phoneNumber: userData.phoneNumber,
-        email: userData.email,
-        area: userData.area,
-        state: userData.state,
-        district: userData.district,
-        pinCode: userData.pinCode,
-        city: userData.city
-    });
+        axios.get(`http://localhost:5252/api/User/GetUser?id=${userId}`)
+          .then((response) => {
+            const userData1 = response.data; 
+            setUserDetails({
+              userName: userData1.userName,
+              firstName: userData1.firstName,
+              lastName: userData1.lastName,
+              middleName: userData1.middleName,
+              phoneNumber: userData1.phoneNumber,
+              email: userData1.email,
+              area: userData1.area,
+              state: userData1.state,
+              district: userData1.district,
+              pinCode: userData1.pinCode,
+              city: userData1.city
+            });
+          })
+          
+          .catch((error) => {
+            setState(false);
+            console.error('Error fetching user data:', error);
+            
+          });
+      }, [userId]); 
     
 
     const handleChange = (e) => {
@@ -141,6 +172,14 @@ const changePassword = async (e) => {
         
         }
       );
+      setPassword({
+        existingPassword : "",
+     newPassword :"",
+     confirmPassword : ""
+
+
+      });
+      
 
 
      }
@@ -168,9 +207,41 @@ const changePassword = async (e) => {
 
 }
 
+//    delete 
+const handleDelete = async (e) => {
+    e.preventDefault();
+    try {
+      const url = `http://localhost:5252/api/User/DeleteUser?id=${userId}`;
+      const response = await axios.delete(url, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      setUserId(0);
+      console.log("Response:", response?.data);
+  
+      toast.success(
+        `${response?.data?.message || "User deleted successfully!"}`
+      );
+      
+      
+  
+      navigate("/login");
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message || "Unknown error");
+  
+      toast.error(
+        error.response?.data?.message || "Failed to delete user!"
+      );
+    }
+  };
+  
+  if (!state) return <div><UnAuth/></div>
 
     return (
         <div className="container-fluid1">
+           {/* {state===false&& (  <UnAuth/>)} */}
+          <p>{state}</p>
              <Spinner visible={handleSpinnerState}/>
             <Row>
             
@@ -218,20 +289,7 @@ const changePassword = async (e) => {
         </button>
       </li>
     </ul>
-    <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br><br></br>
-                <br></br>
-                <br></br>
-                
-               
+    
                 
   </div>
 </div>
@@ -310,7 +368,7 @@ const changePassword = async (e) => {
                                             type="number"
                                             id="phoneNumber"
                                             name="phoneNumber"
-                                            m
+                                            
                                            value={userDetails.phoneNumber}
                                             onChange={handleChange}
                                             min="1111111111"
@@ -510,11 +568,19 @@ const changePassword = async (e) => {
                    <div className="col-md-9">
                    <div className="p-4">
                        <h3>Delete Underconstruction </h3>
+                       <form onSubmit={handleDelete}>
+                             
+                         
+                             
+                            
+                       <button type="submit" className="btn btn-danger m-2">Delete Account</button>
+                       
+                      </form>
                        </div>
                    </div>
                 )}
 
-{HandleOption==5 && (
+                {HandleOption==5 && (
                      <div className="col-md-9">
                      <div className="p-4">
                          <h3>Logout Underconstruction </h3>

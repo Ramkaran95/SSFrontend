@@ -2,7 +2,7 @@
   color:white;
   position: relative;
   padding-bottom: 2rem;
-  background-color: rgba(0, 0, 0, 0.904);
+  background-color: rgb(0, 0, 0);
 }
 .hero-container{
   justify-content: space-between;
@@ -22,16 +22,44 @@
   line-height: 4rem;
 }
 
-.blue-circle{
-  height: 4rem;
-  width: 4rem;
+.blue-circle {
+  height: 5rem;
+  width: 5rem;
   background-color: rgb(31, 198, 228);
   border-radius: 999px;
   position: absolute;
   right: -5%;
   top: -10%;
   z-index: -1;
+  transition: all 0.5s ease; /* Adds smooth transition to the main circle */
 }
+
+.blue-circle2 {
+  height: 3rem;
+  width: 3rem;
+  background-color: rgba(31, 198, 228, 0.719);
+  border-radius: 999px;
+  position: absolute;
+  right: 11%;
+  top: -21%;
+  z-index: -1;
+  transition: all 0.5s ease; 
+}
+
+.blue-circle2:hover {
+  transform: scale(1.5) rotate(45deg); 
+  background-color: rgba(31, 198, 228, 1);
+  box-shadow: 0 0 30px rgba(31, 198, 228, 0.8), 0 0 60px rgba(31, 198, 228, 0.6); 
+  transition: all 0.5s ease; 
+}
+
+.blue-circle:hover {
+  transform: scale(1.2) rotate(360deg);
+  box-shadow: 0 0 30px rgba(31, 198, 228, 0.6), 0 0 60px rgba(31, 198, 228, 0.8); /* Adds a glowing effect */
+  transition: all 0.5s ease; 
+}
+
+
 
 .search-bar{
   margin-top: 40px;
@@ -44,8 +72,9 @@
   justify-content: space-between;
  
 }
-.search-bar>button{
+.search-bar>button1{
   display: inline-block;
+
 }
 
 .search-bar>input{
@@ -55,8 +84,8 @@
 }
 /* Right Side */
 .image-container{
-  min-width: 20rem;
-  height:30rem;
+  min-width: 18rem;
+  height:32rem;
   overflow: hidden;
   border-radius: 15rem 15rem 0 0;
   border:8px solid rgba(255, 255, 255, 0.12)
@@ -66,3 +95,7 @@
   width: 100%;
   height: 100%;
 }
+
+
+
+
