@@ -15,9 +15,11 @@ function PersonalInfo() {
 
     const location = useLocation();
     const userData= location.state?.userData;
-     const [userId,setUserId]= useState(userData.userId);
+    const userId1 = localStorage.getItem("userId");
+    if (!userId1) return <div><UnAuth/></div>
+     
      const [HandleOption, setOption] = useState(1);
-     const [state ,setState]=useState(true);
+     
      
    
  
@@ -38,7 +40,7 @@ function PersonalInfo() {
    
       useEffect(() => {
        
-        axios.get(`http://localhost:5252/api/User/GetUser?id=${userId}`)
+        axios.get(`http://localhost:5252/api/User/GetUser?id=${userId1}`)
           .then((response) => {
             const userData1 = response.data; 
             setUserDetails({
@@ -57,11 +59,11 @@ function PersonalInfo() {
           })
           
           .catch((error) => {
-            setState(false);
+           
             console.error('Error fetching user data:', error);
             
           });
-      }, [userId]); 
+      }, [userId1]); 
     
 
     const handleChange = (e) => {
@@ -75,10 +77,10 @@ function PersonalInfo() {
         try {
             console.log("ID", typeof userDetails.userId,userDetails.userId);   
             console.log("ID", typeof userDetails ,userDetails);   
-            console.log("ID", typeof userId ,userId);   
+            console.log("ID", typeof userId1 ,userId1);   
    
            
-            const response = await axios.put("http://localhost:5252/api/User/Update?id="+userId, userDetails ,{
+            const response = await axios.put("http://localhost:5252/api/User/Update?id="+userId1, userDetails ,{
                 headers: {
                   "Content-Type": "application/json",
                 },
@@ -150,11 +152,11 @@ const changePassword = async (e) => {
         existingPassword : handlePassword.existingPassword,
          newPassword : handlePassword.newPassword
     
-    };  console.log(apidata,userId);
+    };  console.log(apidata,userId1);
 
     
 
-    const response = await axios.put("http://localhost:5252/api/User/changePassword?id="+userId, apidata, {
+    const response = await axios.put("http://localhost:5252/api/User/changePassword?id="+userId1, apidata, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -211,13 +213,14 @@ const changePassword = async (e) => {
 const handleDelete = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://localhost:5252/api/User/DeleteUser?id=${userId}`;
+      const url = `http://localhost:5252/api/User/DeleteUser?id=${userId1}`;
       const response = await axios.delete(url, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-      setUserId(0);
+      localStorage.removeItem("userId");
+    
       console.log("Response:", response?.data);
   
       toast.success(
@@ -235,13 +238,35 @@ const handleDelete = async (e) => {
       );
     }
   };
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    try {
+   
+      localStorage.removeItem("userId");
+    
+     
+      toast.success(
+        `${ "User logout successfully!"}`
+      );
+      
+      
   
-  if (!state) return <div><UnAuth/></div>
+      navigate("/login");
+    } catch (error) {
+      console.error("Error:", error.response?.data || error.message || "Unknown error");
+  
+      toast.error(
+        error.response?.data?.message || "Failed to delete user!"
+      );
+    }
+  };
+  
+  
 
     return (
         <div className="container-fluid1">
            {/* {state===false&& (  <UnAuth/>)} */}
-          <p>{state}</p>
+          
              <Spinner visible={handleSpinnerState}/>
             <Row>
             
@@ -584,6 +609,14 @@ const handleDelete = async (e) => {
                      <div className="col-md-9">
                      <div className="p-4">
                          <h3>Logout Underconstruction </h3>
+                         <form onSubmit={handleLogout}>
+                             
+                         
+                             
+                            
+                       <button type="submit" className="btn btn-danger m-2">Logout</button>
+                       
+                      </form>
                          </div>
                      </div>
                 )}

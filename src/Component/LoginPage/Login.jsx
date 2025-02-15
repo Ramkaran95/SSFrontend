@@ -61,8 +61,11 @@ function Login() {
         
               }
       );
-      navigate(path,{state:{userData:response.data}});
-      
+      localStorage.setItem("userId", response.data.userId);
+      navigate(path);
+      const userId = localStorage.getItem("userId");
+
+console.log("Token:", userId);
    
       /// Handle successful login (e.g., save user details to state or redirect)
       return response.data;

@@ -38,6 +38,7 @@ const Value = () => {
                     {
                     data.map((item,i)=> {
                         return(
+                            
                             <AccordionItem className='accordionItem' key={i} uuid={i}>
                                 <AccordionItemHeading>
                                     <AccordionItemButton className='flexCenter accordionButton'>

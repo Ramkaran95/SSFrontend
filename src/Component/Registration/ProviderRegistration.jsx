@@ -12,6 +12,7 @@ import { useLoadScript, Autocomplete } from "@react-google-maps/api";
 const libraries = ["places"]; // Required for Autocomplete
 
 function ProviderRegistration() {
+  const Gkey= import.meta.env.VITE_GOOGLE_KEY;
   const [value,setValue]=useState('')
   const options = [
       {label:"Delhi",value:1},
@@ -67,7 +68,7 @@ function ProviderRegistration() {
       firstName: "",
       middleName: "",
       lastName: "",
-      profilePhoto: "profile.jpg",
+      profilePhoto: "/uploads/profile.jpg",
       phoneNumber: "",
       email: "",
       createAt: date.toISOString(),
@@ -85,13 +86,13 @@ function ProviderRegistration() {
       skill3: "",
       serviceName1: "",
       servicePrice1: 0,
-      serviceImage1: "service.jpg",
+      serviceImage1: "/uploads/service.jpg",
       serviceName2: "",
       servicePrice2: 0,
-      serviceImage2: "service.jpg",
+      serviceImage2: "/uploads/service.jpg",
       serviceName3: "",
       servicePrice3: 0,
-      serviceImage3: "service.jpg",
+      serviceImage3: "/uploads/service.jpg",
       area: "",
       state: "",
       district: "",
@@ -267,7 +268,7 @@ function ProviderRegistration() {
   // const [inputValue, setInputValue] = useState("");
   // const [address, setAddress] = useState({});
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk", // Replace with your API Key
+    googleMapsApiKey: Gkey, // Replace with your API Key
     libraries,
   });
   const handlePlaceChanged = (autocomplete) => {

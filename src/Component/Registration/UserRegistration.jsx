@@ -13,7 +13,8 @@ const libraries = ["places"]; // Required for Autocomplete
 function UserRegistration() {
     const navigate= useNavigate();
     const date = new Date();
-   
+    const Gkey= import.meta.env.VITE_GOOGLE_KEY;
+       
     const [formData, setFormData] = useState({
             userId: 0,
             userName: "",
@@ -92,7 +93,7 @@ function UserRegistration() {
   // const [inputValue, setInputValue] = useState("");
   // const [address, setAddress] = useState({});
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk", // Replace with your API Key
+    googleMapsApiKey: Gkey, // Replace with your API Key
     libraries,
   });
   const handlePlaceChanged = (autocomplete) => {

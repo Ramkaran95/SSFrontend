@@ -6,9 +6,10 @@ import { HiLocationMarker } from 'react-icons/hi';
 import { FaSearch } from 'react-icons/fa';
 function Hero() {
   const navigate = useNavigate()
-  const handleSearch=()=>{
+  const handleSearch=(e)=>{
+    e.preventDefault();
     navigate("/UserDashboard")
-
+   
   }
   return (
     <section className="hero-wrapper">
@@ -33,15 +34,15 @@ function Hero() {
         </div>
        
 
-        <div className=' search-bar'>
+      <div className=' search-bar'>
     
-
           <FaSearch display='inline-block' color='aqua' size={25}/>
           <input type='text' placeholder='Find Experts eg:- painter,carpenter,plumber,etc'
           onChange={e=>setLocation(e.target.value)}/>
-          <button className="button1" onClick={handleSearch}>Search</button>
-
-        </div>
+          <form className="h-1" onSubmit={handleSearch}>
+          <button className="btn btn-primary w-5" >Search</button>
+          </form>
+        </div> 
         </div>
 
         <div className='flexCenter hero-right'>

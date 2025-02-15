@@ -84,8 +84,8 @@
 }
 /* Right Side */
 .image-container{
-  min-width: 18rem;
-  height:32rem;
+  min-width: 28rem;
+  height:35rem;
   overflow: hidden;
   border-radius: 15rem 15rem 0 0;
   border:8px solid rgba(255, 255, 255, 0.12)

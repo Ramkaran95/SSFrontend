@@ -12,14 +12,59 @@ import { useLocation } from 'react-router-dom';
 import { useLoadScript, Autocomplete } from "@react-google-maps/api";
 import SearchItem from './SearchItem/SearchItem';
 import UnAuth from "../../Features/UnAuth";
+import FooterSection from "../HomePage/FooterSection";
+import NavBar from "../HomePage/NavBar";
 const libraries = ["places"]; // Required for Autocomplete
 
 
 const UserDashBoard= () => {
-    const location = useLocation();
- const userData=location.state?.userData;
- if (!userData) return<div><UnAuth/></div>
- 
+    
+ const serverUrl = import.meta.env.VITE_SERVER_URL;
+ const Gkey= import.meta.env.VITE_GOOGLE_KEY;
+ const userId = localStorage.getItem("userId");
+
+ console.log("Server URL:", serverUrl,userId);
+ if (!userId) return<div><UnAuth/></div>
+ const [userDetails, setUserDetails] = useState({
+  userName:'',
+  firstName: '',
+  lastName:  '',
+  middleName: '',
+  phoneNumber:  '',
+  email: '',
+  area:  '',
+  state: '',
+  district:  '',
+  pinCode: '',
+  city:  ''
+});
+ useEffect(() => {
+       
+  axios.get(`http://localhost:5252/api/User/GetUser?id=${userId}`)
+    .then((response) => {
+      const userData1 = response.data; 
+      setUserDetails({
+        userName: userData1.userName,
+        firstName: userData1.firstName,
+        lastName: userData1.lastName,
+        middleName: userData1.middleName,
+        phoneNumber: userData1.phoneNumber,
+        email: userData1.email,
+        area: userData1.area,
+        state: userData1.state,
+        district: userData1.district,
+        pinCode: userData1.pinCode,
+        city: userData1.city
+      });
+    })
+    
+    .catch((error) => {
+      // setState(false);
+      console.error('Error fetching user data:', error);
+      
+    });
+}, [userId]); 
+
  
  
     // const photos = [
@@ -38,7 +83,7 @@ const UserDashBoard= () => {
     //     { url: '/beautrician.png', name: 'Beautician' }  ,
     //     { url: '/plumber.png', name: 'Security Guard' } ];
         const photos = [
-          { url: '/Provider/makeup-artist.png', name: 'Beautician' },
+          { url: '/Provider/makeup-artist.png', name: 'Beautrician' },
           { url: '/Provider/plumber.png', name: 'Plumber' },
           { url: '/Provider/electrician.png', name: 'Electrician' },
           { url: '/Provider/carpenter.png', name: 'Carpenter' },
@@ -70,7 +115,7 @@ const UserDashBoard= () => {
           "Handyman",
           "Plasterer",
           "Gardener",
-          "Beautician",
+          "Beautrician",
           "Technician",
           "Construction Laborer",
           "Pest Control Technician",
@@ -79,8 +124,8 @@ const UserDashBoard= () => {
           ];
           const navigate = useNavigate()
           function nav (){
-            console.log(userData,{userData});
-            navigate("/userDashboard/personalInfo",{state:{userData}});
+            console.log("userData",{userDetails});
+            navigate("/userDashboard/personalInfo");
 
 
           }
@@ -89,7 +134,7 @@ const UserDashBoard= () => {
         //  ----------------
           // autocomplete 
           const { isLoaded, loadError } = useLoadScript({
-            googleMapsApiKey: "AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk", // Replace with your API Key
+            googleMapsApiKey: Gkey, // Replace with your API Key
             libraries,
           });
           const handlePlaceChanged = (autocomplete) => {
@@ -150,7 +195,7 @@ const UserDashBoard= () => {
           const handleProviderSearch = async (e) => {
             e.preventDefault();
             
-            const url = `http://localhost:5252/api/Features/ProviderByLocation?city=${providerFilter.city}&pinCode=${providerFilter.pincode}&district=${providerFilter.district}&profession=${providerFilter.profession || ""}`;
+            const url = `${serverUrl}Features/ProviderByLocation?city=${providerFilter.city}&pinCode=${providerFilter.pincode}&district=${providerFilter.district}&profession=${providerFilter.profession || ""}`;
           
             try {
               const response = await axios.get(url, {
@@ -200,9 +245,9 @@ const UserDashBoard= () => {
               let url;
               
               if (!providerFilter.city) {  // Check if city is empty
-                  url = `http://localhost:5252/api/Features/ProviderByLocation?city=${city || ""}&pinCode=${pincode || 0}&district=${district || ""}&profession=${profession || ""}`;
+                  url = `${serverUrl}Features/ProviderByLocation?city=${city || ""}&pinCode=${pincode || 0}&district=${district || ""}&profession=${profession || ""}`;
               } else {
-                  url = `http://localhost:5252/api/Features/ProviderByLocation?city=${providerFilter.city}&pinCode=${providerFilter.pincode}&district=${providerFilter.district || ""}&profession=${profession || ""}`;
+                  url = `${serverUrl}Features/ProviderByLocation?city=${providerFilter.city}&pinCode=${providerFilter.pincode}&district=${providerFilter.district || ""}&profession=${profession || ""}`;
               }
           
               const response = await axios.get(url, {
@@ -256,18 +301,18 @@ const UserDashBoard= () => {
                 if (loadError) return <div>Error loading Google Maps</div>;
                 if (!isLoaded) return <div>Loading...</div>;
       
-        
+               
   return (
     <> 
- 
+   
     <div className="container-fluid" >
       {/* Header */}
      {/* <p>{userData.firstName+ providerFilter.pincode +JSON.stringify(providerResponse, null, 2)}</p> */}
-      <div className="header1">
-    <div>
+      <div className="header1" >  
+         <div>
       <h1 className="title1">ServiceSeeker</h1>
-      <p className="subtitle1">Hello, {userData.firstName} { userData.lastName}</p>
-      <p className="location1"> <i className="bi bi-geo-alt-fill me-1"></i>{userData.city}, {userData.pinCode}</p>
+      <p className="subtitle1">Hello, {userDetails.firstName} { userDetails.lastName}</p>
+      <p className="location1"> <i className="bi bi-geo-alt-fill me-1"></i>{userDetails.city}, {userDetails.pinCode}</p>
     </div>
     <div className="profile-icon1">
   <div
@@ -356,7 +401,7 @@ const UserDashBoard= () => {
         id={`prosession${index}`} 
         name="procession"
         value={photo.name}
-        onClick={(e) => handleProviderSearch1(e, userData.city, userData.pinCode, userData.district, photo.name)}
+        onClick={(e) => handleProviderSearch1(e, userDetails.city, userDetails.pinCode, userDetails.district, photo.name)}
         style={{ backgroundImage: `url(${photo.url})` }}
       >
         <p id="p1">{photo.name}</p>
@@ -372,7 +417,7 @@ const UserDashBoard= () => {
  <div className="listResult">
  {providerResponse.map((presponse, index) => (
      
-    <SearchItem key={index} ProviderData={presponse} UserData={userData}/>
+    <SearchItem key={index} ProviderData={presponse} />
 
  ))}
     <p>{providerFilter.city}</p>
@@ -380,6 +425,7 @@ const UserDashBoard= () => {
     <p>{providerFilter.profession}</p>
     
 </div>
+
     </>
   );
 };

@@ -9,7 +9,6 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import Layout from './Layout.jsx'
 import About from './Component/AboutPage/About.jsx'
 import Login from './Component/LoginPage/Login.jsx'
-import ProviderDashBoard from './Component/Dashboard/ProviderDashboard.jsx'
 
 import ForgetPassword from './Component/ForgetPage/ForgetPassword.jsx'
 import Register from './Component/Register/Register.jsx'
@@ -20,6 +19,7 @@ import UserDashBoard from './Component/Dashboard/UserDashBoard.jsx';
 import PersonalInfo from './Component/Update/PersonalInfo.jsx';
 import PageNotFound from './Features/PageNotFound.jsx';
 import ProviderPage from './Component/Dashboard/ProviderPage.jsx';
+import ProviderDashBoard from './Component/Dashboard/ProviderDashBoard.jsx';
 
 
 
@@ -31,7 +31,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<Layout/>}/>
     <Route path="/about" element={<About/>}/>
     <Route path="/login" element={<Login/>}/>
-   <Route path="/userDashboard" element={<UserDashBoard/>}/>
+    <Route path="/userDashboard" element={<UserDashBoard/>}/>
    <Route path="/providerDashboard" element={<ProviderDashBoard/>}/>
    <Route path="/login/forgetpassword" element={<ForgetPassword/>}/>
     <Route path="/register" element={<Register/>}/>
@@ -40,6 +40,7 @@ const router = createBrowserRouter(
     <Route path="/contact" element={<Contact/>}/>
     <Route path="/userDashboard/personalInfo" element={<PersonalInfo/>}/>
     <Route path="/userDashboard/providerPage" element={<ProviderPage/>}/>
+    <Route path="/services" element={<UserDashBoard/>}/>
     
    <Route path="*" element={<PageNotFound/>}/>
     
