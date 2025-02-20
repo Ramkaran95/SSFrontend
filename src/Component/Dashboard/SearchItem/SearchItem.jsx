@@ -6,15 +6,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 const SearchItem = ({ ProviderData }) => {
     const navigate = useNavigate();
-    const urlI = "http://localhost:5252";
+    const urlI = "http://localhost:5252/";
      
     const userId =   localStorage.getItem("userId");
 
  
 
     const providerPage = () => {
-        const path = "/userDashboard/providerPage";
-      
+        const path = "/providerPage";
+       
+       
         navigate(path, { state: {  ProviderDetails: ProviderData } });
     };
 
@@ -42,8 +43,8 @@ const SearchItem = ({ ProviderData }) => {
                 <div className="row g-3 align-items-center">
                     
                     {/* Image Section */}
-                    <div className="col-md-3">
-                        <img src={urlI + ProviderData.profilePhoto} alt="Provider" className="img-fluid rounded" />
+                    <div className="col-md-2">
+                        <img src={urlI + ProviderData.profilePhoto} alt="Provider" className="img-fluid " />
                     </div>
 
                     {/* Description Section - Left Aligned */}
@@ -98,7 +99,7 @@ const SearchItem = ({ ProviderData }) => {
                     
 
                     {/* Rating Section */}
-                    <div className="col-md-3 text-start">
+                    <div className="col-md-4 text-start">
                         
                         <h5 className="text-primary fw-bold">Rating: {ProviderData.rating} out of 5</h5>
                         <div className="d-flex">
@@ -112,7 +113,7 @@ const SearchItem = ({ ProviderData }) => {
             </div>
 
             {/* Debugging Data */}
-            <pre className="mt-3 bg-light p-2 rounded">{userId + JSON.stringify(ProviderData, null, 2)}</pre>
+            {/* <pre className="mt-3 bg-light p-2 rounded">{userId + JSON.stringify(ProviderData, null, 2)}</pre> */}
         </div>
     );
 };

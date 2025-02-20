@@ -178,14 +178,14 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { Container, Card, Form, Row, Col, Button } from 'react-bootstrap';
-import { FaPhoneAlt } from 'react-icons/fa';
+import { FaPhoneAlt,FaRupeeSign } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
 import Nav from 'react-bootstrap/Nav';
 
 import { FaMapMarkerAlt} from 'react-icons/fa';
 import { FaEnvelope, FaFacebook, FaSquareInstagram, FaSquareXTwitter } from 'react-icons/fa6';
 import { SiLinkedin } from 'react-icons/si';
-import { FcAlarmClock, FcApproval,FcLink,FcGlobe,FcPositiveDynamic,FcOnlineSupport } from "react-icons/fc";
+import { FcAlarmClock, FcPuzzle,FcApproval,FcLink,FcGlobe,FcPositiveDynamic,FcOnlineSupport } from "react-icons/fc";
 import { useLocation } from 'react-router-dom';
 import './ProviderPage.css';
 import MapComponent from './MapComponent';
@@ -195,8 +195,9 @@ const ProviderPage = () => {
  
    
     const location = useLocation();
+    
         const userId =   localStorage.getItem("userId");
-
+       
         const providerdetails = location?.state?.ProviderDetails;
         const [HandleOption, setHandleOption]= useState("1");
         console.log(providerdetails);
@@ -211,8 +212,13 @@ const ProviderPage = () => {
     //     }, [providerdetails]);
       
         
-      
-        const urlI="http://localhost:5252/";
+       const skills=[providerdetails.skill1,providerdetails.skill2,providerdetails.skill3];
+        
+       const services=[[providerdetails.serviceImage1,providerdetails.serviceName1,providerdetails.servicePrice1]
+       ,[providerdetails.serviceImage2,providerdetails.serviceName2,providerdetails.servicePrice2],
+       [providerdetails.serviceImage3,providerdetails.serviceName3,providerdetails.servicePrice3]];
+       
+       const urlI="http://localhost:5252/";
         const handleSelect = (eventKey) =>{ 
           setHandleOption(eventKey);
          
@@ -222,33 +228,39 @@ const ProviderPage = () => {
        
     
   return (
-    <div className="container-fluid mt-2">
-      <Card style={{ width: '100%', borderRadius: '15px' }}>
-        <div className="d-flex justify-content-center">
-           <img src={urlI + providerdetails.profilePhoto} alt="Provider" className="img-fluid rounded" />
-        </div>
+    <div className="container-fluid  bg-dark">
+     
+        <div className="d-flex justify-content-center  " style={{ background: 'none' }}>
+  <img 
+    src={urlI + providerdetails.profilePhoto} 
+    alt="Provider" 
+    className="rounded-circle  mt-5 profile-img" 
+  />
+</div>
 
-        <div><h4 className="mt-2">{providerdetails.firstName} {providerdetails.middleName} {providerdetails.lastName}</h4>
-          <p className="text-muted"><strong>{providerdetails.professionType}</strong></p>
+{/* <img src={urlI + providerdetails.profilePhoto} alt="Provider" className="round profile-img" /> */}
+      
+        <div><h4 className="mt-2 text-light">{providerdetails.firstName} {providerdetails.middleName} {providerdetails.lastName}</h4>
+          <p className="text-secondary"><strong>{providerdetails.professionType}</strong></p>
         </div>
-          <p className="text-start ">Bio</p>
-          <Form.Control as="textarea" disabled value={providerdetails.bio} placeholder="Bio of provider" />
+          <p className="text-start text-white ">Bio</p>
+          <Form.Control as="textarea" className='text-white' style={{background:'#323233', border:'none'}}disabled value={providerdetails.bio} placeholder="Bio of provider" />
        
         <Row className="mb-3">
           <Col>
-            <Button variant="outline-dark" className="w-100">
-             <span><img style={{ height: "35px" }} src="/Common/contact.gif" alt="Provider" className="img-fluid rounded" />
-              </span>{providerdetails.phoneNumber}
+            <Button variant="outline-white" className="w-50 bg-primary">
+             <span className='text-white'><img style={{ height: "35px" }} src="/Common/contact.gif" alt="Provider" className="img-fluid rounded" />
+             {providerdetails.phoneNumber}</span>
             </Button>
           </Col>
           <Col>
-            <Button variant="outline-dark" className="w-100">
-            <span><img style={{ height: "35px" }} src="/Common/email.gif" alt="Provider" className="img-fluid rounded" />
+            <Button variant="outline-dark" className="w-50 bg-primary">
+            <span className='text-white'><img style={{ height: "35px" }} src="/Common/email.gif" alt="Provider" className="img-fluid rounded" />
             {providerdetails.email}</span>
             </Button>
           </Col>
         </Row>
-        <Card>
+        <Card   style={{ background:'#323233'}}>
         <Card.Header>
         <Nav justify variant="tabs"  onSelect={handleSelect}> 
       <Nav.Item>
@@ -266,8 +278,9 @@ const ProviderPage = () => {
      
     </Nav>
     </Card.Header>
-    <Card.Body>
+    <Card.Body className="d-flex justify-content-center align-items-center flex-wrap" style={{ background:'3a3a3dd7'}}>
     {HandleOption=="1" && (<div>
+      <Card>
       <Row>
         <Col>
        
@@ -275,7 +288,7 @@ const ProviderPage = () => {
           <Card.Title className='text-start'><FcApproval /> Availability :  {`${providerdetails.availability? 'Yes' : 'No'}`}</Card.Title>
           <Card.Title className='text-start'><FcAlarmClock /> Timing :  {providerdetails.timeOfService} </Card.Title>
           <Card.Title className='text-start'><Nav.Link className="text-primary" href={`${providerdetails.socialLink1}`}><FcLink /> Social link 1</Nav.Link></Card.Title>
-          <Card.Title className='text-start'><FcGlobe /> Join at :  {providerdetails.createAt} </Card.Title>
+          <Card.Title className='text-start'><FcGlobe /> Join at :  {providerdetails.createAt.slice(0,10)} </Card.Title>
         
         
         </Col>
@@ -283,20 +296,76 @@ const ProviderPage = () => {
           
            <Card.Title className='text-start'><FcPositiveDynamic /> Experience :  {providerdetails.yearOfEx} Year</Card.Title>
            <Card.Title className='text-start'><FcOnlineSupport /> Language Spoke :  {providerdetails.languageSpoke.toUpperCase().split(",").map((lang, index) => (
-                              <span> {lang},</span>
+                              <span key={index}> {lang},</span>
                             ))}</Card.Title>
             <Card.Title className='text-start'> <Nav.Link className="text-primary" href={`${providerdetails.socialLink2}`}><FcLink /> Social link 2</Nav.Link></Card.Title>
            
         </Col>
        
         </Row>
- 
+        </Card>
     
     </div>)}  
     
 
-    {HandleOption=="2" && (<div><h1>2</h1></div>)}
-    {HandleOption=="3"&& (<div><h1>3LOCATION</h1> 
+    {HandleOption=="2" && (
+      
+      <Row className="container">
+        <Row className='p-1'>
+   <Card  style={{ background:'#fafafc'}}>
+      <Card.Header className='text-start'>Skills</Card.Header>
+      <Card.Body>
+        <div className='d-flex justify-content-evenly align-items-center flex-wrap'>
+      {skills.map((skill, index) => (
+        skill !== "" ? ( 
+          
+          <Card.Title key={index} className='skill-badge text-start'><FcPuzzle /> {skill} </Card.Title>
+   
+        ) : null
+      ))}
+      </div>
+      </Card.Body>
+    </Card>
+    </Row>
+  
+    <Row className='p-1'>
+      <Card   style={{ background:'#fafafc'}}>
+    <Card.Header className='text-start'>Services</Card.Header>
+   
+    <Card.Body >
+    <div className="d-flex justify-content-evenly align-items-center flex-wrap">
+      {services.map((service, index) =>
+        service[1] !== "" ? ( 
+          <Card key={index} style={{ width: "18rem" }} className="service-card">
+            <Card.Img variant="top" src={urlI + service[0]} className="service-img" />
+            <Card.Body>
+              <Card.Text className="text-start">
+                <strong>{service[1]}</strong>
+                <br />
+               </Card.Text>
+              <Button variant="primary" className="price-btn">
+                <FaRupeeSign /> {service[2]}
+              </Button>
+            </Card.Body>
+          </Card>
+        ) : null
+      )}
+    </div>
+    </Card.Body>
+    </Card>
+</Row>
+      </Row>
+      
+      
+      
+      )}
+    {HandleOption=="3"&& (<div className='container-fluid'>
+      <Card>
+      <Card.Title className='text-start'><FcOnlineSupport /> Service available in  :  {providerdetails.areaServe.toUpperCase().split(",").map((area, index) => (
+                                <span key={index} className="badge bg-secondary ms-1">{area}</span>
+                            ))}</Card.Title>
+      <Card.Title className='text-start'><FcOnlineSupport /> Location  :  {providerdetails.area}</Card.Title>
+  
       {/* {providerdetails?.latitude && providerdetails?.longitude ? (
       <iframe 
         ref={mapRef} 
@@ -310,8 +379,8 @@ const ProviderPage = () => {
     ) : (
       <p>Loading map...</p>
     )} */}
-    <MapComponent long={72.859648} lati={19.1266816}/>
-
+    <MapComponent long={providerdetails.longitude} lati={providerdetails.latitude}/>
+    </Card>
 </div>)}
     {HandleOption=="4"&& (<div><h1>4</h1>
     
@@ -320,7 +389,7 @@ const ProviderPage = () => {
       </Card.Body>
       </Card>
       
-    </Card>
+    
     </div>
   );
 };

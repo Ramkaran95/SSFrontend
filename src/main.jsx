@@ -20,6 +20,7 @@ import PersonalInfo from './Component/Update/PersonalInfo.jsx';
 import PageNotFound from './Features/PageNotFound.jsx';
 import ProviderPage from './Component/Dashboard/ProviderPage.jsx';
 import ProviderDashBoard from './Component/Dashboard/ProviderDashBoard.jsx';
+import ProviderPersonalInfo from './Component/Update/ProviderPersonalInfo.jsx';
 
 
 
@@ -39,7 +40,8 @@ const router = createBrowserRouter(
     <Route path="/register/providerRegistration" element={<ProviderRegistration/>}/>
     <Route path="/contact" element={<Contact/>}/>
     <Route path="/userDashboard/personalInfo" element={<PersonalInfo/>}/>
-    <Route path="/userDashboard/providerPage" element={<ProviderPage/>}/>
+    <Route path="/providerDashboard/personalInfo" element={<ProviderPersonalInfo/>}/>
+    <Route path="/providerPage" element={<ProviderPage/>}/>
     <Route path="/services" element={<UserDashBoard/>}/>
     
    <Route path="*" element={<PageNotFound/>}/>

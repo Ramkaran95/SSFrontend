@@ -38,6 +38,7 @@ const UserDashBoard= () => {
   pinCode: '',
   city:  ''
 });
+const [previousData, setPreviousData]=useState([]);
  useEffect(() => {
        
   axios.get(`http://localhost:5252/api/User/GetUser?id=${userId}`)
@@ -63,6 +64,40 @@ const UserDashBoard= () => {
       console.error('Error fetching user data:', error);
       
     });
+    const precity = localStorage.getItem("ucity");
+    const prepincode = localStorage.getItem("upincode");
+    const predistrict = localStorage.getItem("udistrict");
+    const preprofession = localStorage.getItem("uprofession");
+    
+    if (precity && prepincode && predistrict && preprofession) {
+      // Create an async function to handle the request
+      const fetchData = async () => {
+        try {
+          const response = await axios.get(
+            `http://localhost:5252/api/Features/ProviderByLocation?city=${precity}&pinCode=${prepincode}&district=${predistrict}&profession=${preprofession}`,
+            {
+              headers: {
+                "Content-Type": "application/json",
+              },
+            }
+          );
+          setPreviousData(response.data)
+          const previousData = response.data;
+          console.log("Found previous data:", previousData);
+          console.log("City:", precity);
+          console.log("Pincode:", prepincode);
+          console.log("District:", predistrict);
+          console.log("Profession:", preprofession);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      };
+    
+      fetchData(); // Call the function
+    } else {
+      console.log("No previous data found");
+    }
+    
 }, [userId]); 
 
  
@@ -196,7 +231,11 @@ const UserDashBoard= () => {
             e.preventDefault();
             
             const url = `${serverUrl}Features/ProviderByLocation?city=${providerFilter.city}&pinCode=${providerFilter.pincode}&district=${providerFilter.district}&profession=${providerFilter.profession || ""}`;
-          
+            localStorage.setItem("ucity",providerFilter.city);
+            localStorage.setItem("upincode",providerFilter.pincode);
+            localStorage.setItem("udistrict",providerFilter.district);
+            localStorage.setItem("uprofession",providerFilter.profession);
+           
             try {
               const response = await axios.get(url, {
                 headers: {
@@ -246,9 +285,19 @@ const UserDashBoard= () => {
               
               if (!providerFilter.city) {  // Check if city is empty
                   url = `${serverUrl}Features/ProviderByLocation?city=${city || ""}&pinCode=${pincode || 0}&district=${district || ""}&profession=${profession || ""}`;
-              } else {
+                  localStorage.setItem("ucity",city);
+                  localStorage.setItem("upincode",pincode);
+                  localStorage.setItem("udistrict",district);
+                  localStorage.setItem("uprofession",profession);
+                 
+                } else {
                   url = `${serverUrl}Features/ProviderByLocation?city=${providerFilter.city}&pinCode=${providerFilter.pincode}&district=${providerFilter.district || ""}&profession=${profession || ""}`;
-              }
+                  localStorage.setItem("ucity",providerFilter.city);
+                  localStorage.setItem("upincode",providerFilter.pincode);
+                  localStorage.setItem("udistrict",providerFilter.district);
+                  localStorage.setItem("uprofession",providerFilter.profession);
+              
+                }
           
               const response = await axios.get(url, {
                   headers: {
@@ -339,7 +388,7 @@ const UserDashBoard= () => {
        
         <div className="container w-100">
       <div className="container  ">
-      <form onSubmit={handleProviderSearch}>
+     
       <div className="d-flex  justify-content-between align-item-center">
      {/* <input
           type="text"
@@ -377,12 +426,17 @@ const UserDashBoard= () => {
            </option>
          ))}
        </select> 
-        <button type="submit"   className="btn btn-primary  h-100" >&nbsp;&nbsp;Search&nbsp;&nbsp;</button>
-         
+       <button 
+  type="button" 
+  className="btn btn-primary h-100" 
+  onClick={handleProviderSearch}
+>
+  Search
+</button> 
     
      
     </div>
-    </form> 
+    
     </div>
     </div>
   
@@ -391,12 +445,12 @@ const UserDashBoard= () => {
     <div className="containner m-3">
     <div className=" d-flex  justify-content-center align-item-center">
     
-      <form>
+     
   <div className="grid1">
     {photos.map((photo, index) => (
       <button
         key={index}
-        type="submit"
+        type="button"
         className="box1 btn button11p"
         id={`prosession${index}`} 
         name="procession"
@@ -408,24 +462,37 @@ const UserDashBoard= () => {
       </button>
     ))}
   </div>
-</form>
+
 
       </div>
       </div>
       </div>
  </div>
- <div className="listResult">
- {providerResponse.map((presponse, index) => (
-     
-    <SearchItem key={index} ProviderData={presponse} />
-
- ))}
-    <p>{providerFilter.city}</p>
-    <p>{providerFilter.pincode}</p>
-    <p>{providerFilter.profession}</p>
-    
-</div>
-
+ {providerResponse && providerResponse.length > 0 ? (
+  providerResponse.map((presponse, index) => (
+    <React.Fragment key={presponse.id || index}>
+      <SearchItem ProviderData={presponse} />
+      {/* 
+      <pre className="mt-3 bg-light p-2 rounded">
+        {userId + JSON.stringify(presponse, null, 2)}
+      </pre> 
+      */}
+    </React.Fragment>
+  ))
+) : previousData && previousData.length > 0 ? (
+  previousData.map((predata, index) => (
+    <React.Fragment key={predata.id || index}>
+      <SearchItem ProviderData={predata} />
+      {/* 
+      <pre className="mt-3 bg-light p-2 rounded">
+        {userId + JSON.stringify(predata, null, 2)}
+      </pre> 
+      */}
+    </React.Fragment>
+  ))
+) : (
+  <p>Please search for a provider</p>
+)}
     </>
   );
 };

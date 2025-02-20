@@ -220,7 +220,11 @@ const handleDelete = async (e) => {
         },
       });
       localStorage.removeItem("userId");
-    
+      localStorage.removeItem("ucity");
+      localStorage.removeItem("upincode");
+       localStorage.removeItem("udistrict");
+      localStorage.removeItem("uprofession");
+     
       console.log("Response:", response?.data);
   
       toast.success(
@@ -243,7 +247,10 @@ const handleDelete = async (e) => {
     try {
    
       localStorage.removeItem("userId");
-    
+      localStorage.removeItem("ucity");
+      localStorage.removeItem("upincode");
+       localStorage.removeItem("udistrict");
+      localStorage.removeItem("uprofession");
      
       toast.success(
         `${ "User logout successfully!"}`

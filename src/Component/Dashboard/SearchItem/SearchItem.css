@@ -4,15 +4,16 @@
 }
 
 .search-item img {
-    max-height: 180px;
-    object-fit: cover;
-    width: 100%;
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    
 }
 
 .provider-name {
-    font-size: 1.8rem; /* Increased font size */
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #333; /* Dark color */
+    color: #333; 
 }
 
 .profession-type {
@@ -43,11 +44,11 @@
 }
 
 .available {
-    background-color: #13bb3ad3; /* Green */
+    background-color: #13bb3ad3; 
     color: white;
 }
 
 .not-available {
-    background-color: #dc3545; /* Red */
+    background-color: #dc3545; 
     color: white;
 }

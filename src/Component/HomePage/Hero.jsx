@@ -8,6 +8,7 @@ function Hero() {
   const navigate = useNavigate()
   const handleSearch=(e)=>{
     e.preventDefault();
+    
     navigate("/UserDashboard")
    
   }

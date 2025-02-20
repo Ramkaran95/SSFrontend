@@ -61,7 +61,9 @@ function Login() {
         
               }
       );
-      localStorage.setItem("userId", response.data.userId);
+      accountType=== "user"? localStorage.setItem("userId", response.data.userId):localStorage.setItem("puserId", response.data.providerId);
+      
+      
       navigate(path);
       const userId = localStorage.getItem("userId");
 
