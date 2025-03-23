@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+
+import { Container, Row, Col, Card } from "react-bootstrap";
 import './PersonalInfo.css';
 import {Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -39,7 +40,7 @@ function PersonalInfo() {
       });
    
       useEffect(() => {
-       
+        
         axios.get(`http://localhost:5252/api/User/GetUser?id=${userId1}`)
           .then((response) => {
             const userData1 = response.data; 
@@ -64,6 +65,9 @@ function PersonalInfo() {
             
           });
       }, [userId1]); 
+      useEffect(() => {
+        handleBookings();
+      }, []);
     
 
     const handleChange = (e) => {
@@ -267,7 +271,40 @@ const handleDelete = async (e) => {
       );
     }
   };
-  
+  //booking 
+  const [expanded, setExpanded] = useState({});
+
+  // Toggle function for individual bookings
+  const toggleText = (index) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const maxChars = 20; 
+  const [bookings, setBookings] = useState([]); // Store fetched bookings
+   // Fetch user ID from localStorage
+
+  const handleBookings = async () => {
+    if (!userId1) {
+      console.error("Error: userId1 is undefined or null");
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:5252/api/Booking/GetUserBookings/${userId1}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setBookings(response.data);
+      console.log(response.data) ;// Store data in state
+    } catch (error) {
+      console.error("Error fetching bookings:", error.response?.data || error.message);
+    }
+  };
   
 
     return (
@@ -522,10 +559,113 @@ const handleDelete = async (e) => {
                 {/* For Booking */}
                 {HandleOption==2 && (
                     <div className="col-md-9">
-                    <div className="p-4">
-                        <h3>Booking Under Construction </h3>
-                        </div>
+                 
+                        {bookings.length === 0 ? (
+        <p className="text-center text-muted">No bookings found.</p>
+      ) : (
+        // <div className="row">
+        //   {bookings.map((booking, index) => (
+        //     <div key={index} className=" mb-2">
+        //       <div className="card shadow-sm p-3">
+        //         {/* <img src={"http://localhost:5252/"+booking.service_Image} alt="Service" className="card-img-top" style={{  objectFit: "cover" }} /> */}
+        //         <div className="card-body">
+        //           <Row>  <h5 className="card-title text-start">{booking.service_Name}</h5></Row>
+                
+        //           <p className="card-text">
+        //             <strong>Price:</strong> ₹{booking.service_Price} <br />
+        //             <strong>Provider:</strong> {booking.firstName} <br />
+        //             <strong>Status:</strong> {booking.booking_Status} <br />
+        //             <strong>Payment Mode:</strong> {booking.mode_Of_Payment} <br />
+        //             <strong>Booking Date:</strong> {new Date(booking.bookingDate).toLocaleDateString()}<br/>
+        //             <strong>Address of service:</strong> {booking.address},{booking.city},{booking.pin} <br />
+        //             <strong>Provider note:</strong> {booking.providerNote} <br />
+        //             <strong>Expected Completion date:</strong> {booking.completionDate} <br />
+                   
+        //           </p>
+        //         </div>
+        //       </div>
+        //     </div>
+        //   ))}
+        // </div>
+        <Container className="mt-4">
+        <h2 className="text-center mb-4">Booking Summary</h2>
+  
+        {bookings.length === 0 ? (
+          <p className="text-center text-muted">No bookings found.</p>
+        ) : (
+          <Row className="justify-content-center">
+            {bookings.map((booking, index) => (
+              <Col key={index} md={6} lg={5} className="mb-4">
+                <Card className="shadow p-3 rounded border border-secondary">
+                  <Card.Body>
+                    <h5 className="text-center mb-3 text-primary fw-bold">Booking Receipt</h5>
+                    
+                    {/* Service & Provider Info */}
+                    <div className="border-bottom pb-2 mb-3">
+                    {expanded[index] ? (
+            <span> {booking.service_Name} </span>
+          ) : (
+            <span>
+              {booking.service_Name.length > maxChars
+                ? booking.service_Name.substring(0, maxChars) + "..."
+                : booking.service_Name}
+            </span>
+          )}
+          {booking.service_Name.length > maxChars && (
+           <button
+           className="btn btn-link p-0"
+           onClick={() => toggleText(index)}
+         >
+           {expanded[index] ? " Show Less" : " Read More"}
+         </button>
+          )}
+                     
+                      <p className="mb-1"><strong>Provider:</strong> {booking.firstName}</p>
+                      <p className="mb-1"><strong>Provider no.:</strong> {booking.providerNum}</p>
+                   
                     </div>
+  
+                    {/* Booking Details */}
+                    <div className="border-bottom pb-2 mb-3">
+                    <p className="mb-1"><strong>Booking Id:</strong> <span >{booking.bookId}</span></p>
+                   
+                      <p className="mb-1"><strong>Booking Status:</strong> <span className="text-success">{booking.booking_Status}</span></p>
+                      <p className="mb-1"><strong>Payment Mode:</strong> {booking.mode_Of_Payment}</p>
+                      <p className="mb-1"><strong>Payment ID:</strong> {booking.paymentId || "N/A"}</p>
+                    </div>
+  
+                    {/* Price & Address */}
+                    <div className="border-bottom pb-2 mb-3">
+                      <p className="mb-1"><strong>Price:</strong> ₹{booking.service_Price}</p>
+                      <p className="mb-1"><strong>Booking Date:</strong> {new Date(booking.bookingDate).toLocaleDateString()} {new Date(booking.bookingDate).toLocaleTimeString()}</p>
+                    </div>
+  
+                    {/* Address Details */}
+                    <div className="border-bottom pb-2 mb-3">
+                      <h6 className="fw-bold">Service Address:</h6>
+                      <p className="mb-1">{booking.address}, {booking.city}, {booking.pin}</p>
+                    </div>
+  
+                    {/* Additional Provider Info */}
+                    <div className="border-bottom pb-2 mb-3">
+                      <p className="mb-1"><strong>Provider Note:</strong> {booking.providerNote || "No additional notes"}</p>
+                      <p className="mb-1"><strong>Expected Completion Date:</strong> {booking.completionDate || "Not provided"}</p>
+                    </div>
+  
+                    {/* Thank You Note */}
+                    <p className="text-center text-muted small">Thank you for choosing our service!</p>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
+      </Container>
+      )}
+    </div>
+  
+
+                   
                    )}
                 {/* For ChangePassword */}
                 {HandleOption==3 && (

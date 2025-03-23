@@ -25,7 +25,7 @@ const NavBar = () => {
           <NavLink to="/" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Home</NavLink>
           </div>
           <div className="button1">
-          <NavLink to="" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Services</NavLink>
+          <NavLink to="/service" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>Services</NavLink>
           </div>
           <div className="button1">
           <NavLink to="/about" style={{color:"white",fontWeight:"bold",textDecoration:"none"}}>About</NavLink>

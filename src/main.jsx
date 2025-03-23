@@ -21,6 +21,8 @@ import PageNotFound from './Features/PageNotFound.jsx';
 import ProviderPage from './Component/Dashboard/ProviderPage.jsx';
 import ProviderDashBoard from './Component/Dashboard/ProviderDashBoard.jsx';
 import ProviderPersonalInfo from './Component/Update/ProviderPersonalInfo.jsx';
+import BookService from './Payment/BookService.jsx';
+import Service from './Component/Service/Service.jsx';
 
 
 
@@ -35,6 +37,8 @@ const router = createBrowserRouter(
     <Route path="/userDashboard" element={<UserDashBoard/>}/>
    <Route path="/providerDashboard" element={<ProviderDashBoard/>}/>
    <Route path="/login/forgetpassword" element={<ForgetPassword/>}/>
+   <Route path="/service" element={<Service/>}/>
+  
     <Route path="/register" element={<Register/>}/>
     <Route path="/register/userRegistration" element={<UserRegistration/>}/>
     <Route path="/register/providerRegistration" element={<ProviderRegistration/>}/>
@@ -43,7 +47,7 @@ const router = createBrowserRouter(
     <Route path="/providerDashboard/personalInfo" element={<ProviderPersonalInfo/>}/>
     <Route path="/providerPage" element={<ProviderPage/>}/>
     <Route path="/services" element={<UserDashBoard/>}/>
-    
+    <Route path="/providerPage/BookingService" element={<BookService/>}/>
    <Route path="*" element={<PageNotFound/>}/>
     
    

@@ -33,8 +33,8 @@ function MapComponent({long, lati}) {
        <div className="container-fluid">
        <iframe 
     id="iframeid" 
-    height="" 
-    width="90%" 
+    height="95%" 
+    width="100%" 
     title="Map" 
     style={{
         border: "2px solid #007bff", // Blue border

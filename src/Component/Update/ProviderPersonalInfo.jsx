@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Row, Col, Container } from 'react-bootstrap';
+import { Card,Row, Col, Container } from 'react-bootstrap';
 import './ProviderPersonalInfo.css';
 import {Navigate, useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -15,6 +15,7 @@ function ProviderPersonalInfo() {
 
     const location = useLocation();
     const userData= location.state?.userData;
+    const pId1 = localStorage.getItem("puserId");
     const userId1 = localStorage.getItem("puserId");
     if (!userId1) return <div><UnAuth/></div>
      
@@ -282,6 +283,10 @@ function ProviderPersonalInfo() {
           console.error('Error fetching user data:', error);
         });
     }, [userId1]);
+
+    useEffect(() => {
+      handleBookings();
+    }, []);
   
     // Handle file input change.
     const handleFileChange = (e) => {
@@ -643,6 +648,70 @@ const handleDelete = async (e) => {
       );
     }
   };
+
+  //booking
+  const [bookings, setBookings] = useState([]); // Store fetched bookings
+  //booking 
+  const [expanded, setExpanded] = useState({});
+
+  // Toggle function for individual bookings
+  const toggleText = (index) => {
+    setExpanded((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const maxChars = 20; 
+  const [updateData, setUpdateData] = useState({});
+  const handleChange1 = (index, field, value) => {
+    setUpdateData((prev) => ({
+      ...prev,
+      [index]: { ...prev[index], [field]: value },
+    }));
+  };
+  const handleUpdate = async (bookingId, index) => {
+    setSpinnerState(true);
+    try {
+      const updatePayload = updateData[index];
+      await axios.put(`http://localhost:5252/api/Booking?id=${bookingId}`, updatePayload);
+      handleBookings();
+      toast.success(
+        `${ "Responded successfully!"}`
+      );
+    } catch (error) {
+      console.error("Error updating booking:", error);
+      toast.error(
+        error.response?.data?.message || "all field required !"
+      );
+    }
+    finally{
+      setSpinnerState(false);
+    }
+  };
+  const handleBookings = async () => {
+    if (!userId1) {
+      console.log(userId1),
+      console.error("Error: userId1 is undefined or null");
+      return;
+    }
+
+    try {
+      const response = await axios.get(`http://localhost:5252/api/Booking/GetUserRequest/${userId1}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setBookings(response.data);
+      console.log(response.data) ;// Store data in state
+    } catch (error) {
+      console.error("Error fetching bookings:", error.response?.data || error.message);
+    }
+  };
+
+  
+  
   
   
 
@@ -1420,9 +1489,151 @@ const handleDelete = async (e) => {
                 {/* For Booking */}
                 {HandleOption==4 && (
                     <div className="col-md-9">
-                    <div className="p-4">
-                        <h3>Booking Under Construction </h3>
-                        </div>
+                   
+                        <Container className="mt-4">
+        <h2 className="text-center mb-4">Booking Requests</h2>
+  
+        {bookings.length === 0 ? (
+          <p className="text-center text-muted">No bookings found.</p>
+        ) : (
+          <Row className="justify-content-center">
+            {bookings.map((booking, index) => (
+              <Col key={index} md={6} lg={5} className="mb-4">
+                <Card className="shadow p-3 rounded border border-secondary">
+                  <Card.Body>
+                    <h5 className="text-center mb-3 text-primary fw-bold">Booking Receipt</h5>
+                    
+                    {/* Service & Provider Info */}
+                    <div className="border-bottom pb-2 mb-3">
+                    {expanded[index] ? (
+            <span> {booking.service_Name} </span>
+          ) : (
+            <span>
+              {booking.service_Name.length > maxChars
+                ? booking.service_Name.substring(0, maxChars) + "..."
+                : booking.service_Name}
+            </span>
+          )}
+          {booking.service_Name.length > maxChars && (
+           <button
+           className="btn btn-link p-0"
+           onClick={() => toggleText(index)}
+         >
+           {expanded[index] ? " Show Less" : " Read More"}
+         </button>
+          )}
+                     
+                      <p className="mb-1"><strong>Customer:</strong> {booking.firstName}</p>
+                      <p className="mb-1"><strong>Customer no.:</strong> {booking.userNum}</p>
+                   
+                    </div>
+  
+                    {/* Booking Details */}
+                    <div className="border-bottom pb-2 mb-3">
+                    <p className="mb-1"><strong>Booking Id:</strong> <span >{booking.bookId}</span></p>
+                    
+                      <p className="mb-1"><strong>Booking Status:</strong> <span className="text-success">{booking.booking_Status}</span></p>
+                      <p className="mb-1"><strong>Payment Mode:</strong> {booking.mode_Of_Payment}</p>
+                      <p className="mb-1"><strong>Payment ID:</strong> {booking.paymentId || "N/A"}</p>
+                    </div>
+  
+                    {/* Price & Address */}
+                    <div className="border-bottom pb-2 mb-3">
+                      <p className="mb-1"><strong>Price:</strong> ₹{booking.service_Price}</p>
+                      <p className="mb-1"><strong>Booking Date:</strong> {new Date(booking.bookingDate).toLocaleDateString()} {new Date(booking.bookingDate).toLocaleTimeString()}</p>
+                    </div>
+  
+                    {/* Address Details */}
+                    <div className="border-bottom pb-2 mb-3">
+                      <h6 className="fw-bold">Customer Address:</h6>
+                      <p className="mb-1">{booking.address}, {booking.city}, {booking.pin}</p>
+                    </div>
+  
+                    {/* Additional Provider Info */}
+                    <div className="border-bottom pb-2 mb-3">
+                      <p className="mb-1"><strong>Provider Note:</strong> {booking.providerNote || "No additional notes"}</p>
+                      <p className="mb-1"><strong>Expected Completion Date:</strong> {booking.completionDate ||  "Not provided"}</p>
+                    </div>
+  
+                    {/* Thank You Note */}
+                    <Row>
+                      <Col>
+                    <div className="inputBox1">
+                                         <input
+                                             type="text"
+                                             id={`providerNote-${index}`}
+                                           
+                                             required
+                                             value={updateData[index]?.providerNote || ""}
+                                             onChange={(e) => handleChange1(index, "providerNote", e.target.value)}
+                                           
+                                          
+                                             
+                                         />
+                                         <span className="spann"> Note</span>
+                                     </div>
+                                     </Col>
+                                 <Col>
+
+                                     <div className="inputBox1">
+                                         <input
+                                             type="text"
+                                             id={`completionDate-${index}`}
+                                            
+                                             required
+                                             value={updateData[index]?.completionDate || ""}
+                                             onChange={(e) => handleChange1(index, "completionDate", e.target.value)}
+                      
+                                           
+                                          
+                                             
+                                         />
+                                         <span className="spann">CompletionDate</span>
+                                     </div>
+                                </Col>
+
+                                     </Row>
+                                     <Row>
+                      <Col>
+                      <div className="inputBox1">
+                                 <select
+         id={`bookingStatus-${index}`}
+        
+         value={updateData[index]?.bookingStatus || ""}
+         onChange={(e) => handleChange1(index, "bookingStatus", e.target.value)}
+                         
+         className="form-select"
+        
+         
+       >
+         <option value="">Select Status</option>
+                          <option value="booked">booked</option>
+                          <option value="accepted">accepted</option>
+                          <option value="completed">completed</option>
+                          <option value="rejected">rejected</option>
+        
+       </select>
+      
+       </div>
+                                     </Col>
+                                 <Col className='m-4'>
+                                 <button
+           className="btn btn-primary"
+           onClick={() => handleUpdate(booking.bookId, index)}
+         >
+          Respond
+         </button>
+                                   </Col>
+
+                                     </Row>
+                    <p className="text-center text-muted small">Thank you for choosing our service!</p>
+                  </Card.Body>
+                </Card>
+              </Col>
+            ))}
+          </Row>
+        )}
+      </Container>
                     </div>
                    )}
 

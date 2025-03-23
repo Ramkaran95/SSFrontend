@@ -101,10 +101,10 @@ const SearchItem = ({ ProviderData }) => {
                     {/* Rating Section */}
                     <div className="col-md-4 text-start">
                         
-                        <h5 className="text-primary fw-bold">Rating: {ProviderData.rating} out of 5</h5>
+                        {/* <h5 className="text-primary fw-bold">Rating: {ProviderData.rating} out of 5</h5>
                         <div className="d-flex">
                             {renderStars(ProviderData.rating)}
-                        </div>
+                        </div> */}
                         <button className="btn btn-success w-100 mt-3" onClick={providerPage}>
                             See Profile
                         </button>
