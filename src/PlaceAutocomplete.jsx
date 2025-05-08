@@ -122,7 +122,7 @@ const PlaceAutocomplete = () => {
   const [inputValue, setInputValue] = useState("");
   const [address, setAddress] = useState({});
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey:"AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk",//import.meta.env.GOOGLE_MAPS_API_KEY,"AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk", // Replace with your API Key
+    googleMapsApiKey:"AIzaSyA_0Rh_KRb3f3rgfsdgdg54ythfrhJksjzoAvAt6_Sd0fufOk",//import.meta.env.GOOGLE_MAPS_API_KEY,"AIzaSyA_0Rh_KRb3f3rJksjzoAvAt6_Sd0fufOk", // Replace with your API Key
     libraries,
   });
   
