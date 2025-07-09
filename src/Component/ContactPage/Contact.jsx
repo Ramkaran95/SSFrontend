@@ -5,7 +5,7 @@ import FooterSection from '../HomePage/FooterSection';
 import { FaLocationDot } from 'react-icons/fa6';
 import { FaPhoneAlt } from 'react-icons/fa';
 import { MdEmail } from 'react-icons/md';
-import PlaceApi from '../../placeApi';
+
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import axios from 'axios';
